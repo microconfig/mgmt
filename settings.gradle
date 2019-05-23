@@ -1,0 +1,8 @@
+rootProject.name = 'microconfig-root'
+
+include 'mgmt:mgmt-starter',
+        'mgmt:mgmt-core',        
+        'mgmt:nexus-resolver',
+        'mgmt:console-api-exposer',
+        'mgmt:dashboard',
+        'mgmt:mgmt-utils'

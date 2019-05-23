@@ -1,0 +1,10 @@
+dependencies {
+    implementation lib.microconfig_core,
+            lib.microconfig_utils,
+            project(':mgmt:mgmt-utils'),
+            project(':mgmt:nexus-resolver'),
+            project(':mgmt:console-api-exposer'),
+            lib.jasypt,
+            lib.commons_compress,
+            'com.google.code.gson:gson'
+}

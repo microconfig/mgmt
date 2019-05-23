@@ -1,0 +1,3 @@
+dependencies {
+    implementation lib.microconfig_utils
+}

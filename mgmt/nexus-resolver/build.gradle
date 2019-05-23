@@ -1,0 +1,7 @@
+dependencies {
+    implementation project(':mgmt:mgmt-utils'),
+            lib.microconfig_utils,
+            lib.maven_resolver
+
+    compile lib.maven_resolver_api
+}
