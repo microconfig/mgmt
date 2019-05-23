@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 
 import java.io.File;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -66,7 +67,7 @@ public class ClasspathStoreImpl implements ClasspathStore {
     public void storeClasspath(String service, List<File> artifacts) {
         ProcessProperties processProperties = propertyService.getProcessProperties(service);
 
-        boolean partialResolved = artifacts.contains(null);
+        boolean partialResolved = new ArrayList<>(artifacts).contains(null);
         storeClasspath(service, artifacts, processProperties);
         storeClasspathVersion(service, processProperties.getMavenSettings(), partialResolved);
     }
