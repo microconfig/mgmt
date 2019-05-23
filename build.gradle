@@ -36,13 +36,13 @@ allprojects {
         mavenCentral()
     }
 
-    publishing {
-        publications {
-            nexus(MavenPublication) {
-                from components.java
-            }
-        }
-    }
+//    publishing {
+//        publications {
+//            nexus(MavenPublication) {
+//                from components.java
+//            }
+//        }
+//    }
 
     dependencies {
         implementation platform("org.springframework.boot:spring-boot-dependencies:2.1.5.RELEASE")
