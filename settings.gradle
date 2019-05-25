@@ -1,4 +1,4 @@
-rootProject.name = 'microconfig-root'
+rootProject.name = 'mgmt-root'
 
 include 'mgmt:mgmt-starter',
         'mgmt:mgmt-core',        
