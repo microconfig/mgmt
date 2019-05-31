@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.time.Instant;
+import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.function.UnaryOperator;
@@ -48,7 +49,7 @@ public class ServiceStatus {
     }
 
     public void output(Consumer<String> writeTo) {
-        String status = value
+        String statusName = value
                 + (getStartTime() == null ? "" : " (" + formatTimeAfter(getStartTime()) + ")")
                 + (getPid() == null ? "" : "[" + getPid() + "]")
                 + (getServiceType() == TASK ? "[TASK]" : "");
@@ -58,10 +59,16 @@ public class ServiceStatus {
             return value == FAILED ? ConsoleColor::red : ConsoleColor::yellow;
         };
 
+        Supplier<String> versionInfo = () -> {
+            if (serviceDescription.getVersion().equals(configVersion)) return configVersion;
+
+            return (isEmpty(configVersion) ? "" : configVersion + ",") + serviceDescription.getVersion();
+        };
+
         writeTo.accept(
                 align(serviceDescription.getName(), 30)
-                        + statusColor.get().apply(align(status, 25))
-                        + serviceDescription.getVersion() + (isEmpty(configVersion) ? "" : "," + configVersion)
+                        + statusColor.get().apply(align(statusName, 25))
+                        + versionInfo.get()
         );
     }
 }
