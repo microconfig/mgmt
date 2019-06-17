@@ -45,6 +45,7 @@ import deployment.mgmt.process.runner.ScriptRunner;
 import deployment.mgmt.process.runner.ScriptRunnerImpl;
 import deployment.mgmt.process.start.StartCommand;
 import deployment.mgmt.process.start.StartCommandImpl;
+import deployment.mgmt.process.start.poststart.RunPostStartScript;
 import deployment.mgmt.process.start.prestart.*;
 import deployment.mgmt.process.start.strategy.AppStartStrategy;
 import deployment.mgmt.process.start.strategy.JavaStartStrategy;
@@ -257,6 +258,7 @@ public class MgmtFactory {
                         new BuildClasspath(classpathService),
                         new RunPreStartScript(scriptRunner)
                 )),
+                new RunPostStartScript(scriptRunner),
                 new StartStrategySelector(of(
                         new NotExecutableStartStrategy(metadataProvider),
                         new JavaStartStrategy(deployFileStructure, metadataProvider, classpathService),

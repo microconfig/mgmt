@@ -23,6 +23,7 @@ import static java.util.stream.Collectors.toList;
 public class StartCommandImpl implements StartCommand {
     private final PropertyService propertyService;
     private final PreStartStep preStartStep;
+    private final PostStartStep postStartStep;
     private final StartStrategy startStrategy;
 
     @Override
@@ -86,8 +87,18 @@ public class StartCommandImpl implements StartCommand {
     private void await(StartHandle startHandle) {
         if (startHandle.awaitStartAndGetStatus()) {
             announce("STARTED " + startHandle.getServiceName() + "\n");
+            executePostStartAction(startHandle);
         } else {
             error("FAILED to start " + startHandle.getServiceName(), startHandle.getException());
+        }
+    }
+
+    private void executePostStartAction(StartHandle handle) {
+        String service = handle.getServiceName();
+        try {
+            postStartStep.afterStart(service, propertyService.getProcessProperties(service));
+        } catch (RuntimeException e) {
+            error("FAILED to execute post start actions for " + service, e);
         }
     }
 

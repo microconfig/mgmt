@@ -24,6 +24,8 @@ public interface ProcessProperties {
 
     String getPrestartScriptName();
 
+    String getPoststartScriptName();
+
     String getVersion();
 
     String getConfigVersion();

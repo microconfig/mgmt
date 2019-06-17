@@ -79,6 +79,11 @@ public class ProcessPropertiesImpl implements ProcessProperties {
     }
 
     @Override
+    public String getPoststartScriptName() {
+        return get("mgmt.poststart.script");
+    }
+
+    @Override
     public String getVersion() {
         return getMavenSettings().getArtifact().getVersion();
     }
