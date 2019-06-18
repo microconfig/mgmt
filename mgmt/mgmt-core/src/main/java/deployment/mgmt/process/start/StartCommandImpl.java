@@ -87,14 +87,13 @@ public class StartCommandImpl implements StartCommand {
     private void await(StartHandle startHandle) {
         if (startHandle.awaitStartAndGetStatus()) {
             announce("STARTED " + startHandle.getServiceName() + "\n");
-            executePostStartAction(startHandle);
+            executePostStartAction(startHandle.getServiceName());
         } else {
             error("FAILED to start " + startHandle.getServiceName(), startHandle.getException());
         }
     }
 
-    private void executePostStartAction(StartHandle handle) {
-        String service = handle.getServiceName();
+    private void executePostStartAction(String service) {
         try {
             postStartStep.afterStart(service, propertyService.getProcessProperties(service));
         } catch (RuntimeException e) {
