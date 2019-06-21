@@ -98,7 +98,7 @@ public class ClasspathStoreImpl implements ClasspathStore {
     private void storeClasspathVersion(String service, MavenSettings mavenSettings, boolean partialResolved) {
         File classpathVersionFile = classpathVersionFile(service);
         if (partialResolved) {
-            error("Some artifacts haven't been resolved. " + ClassNotFoundException.class.getSimpleName() + " is possible in runtime");
+            error("Some artifacts haven't been resolved for " + service + ". " + ClassNotFoundException.class.getSimpleName() + " is possible in runtime");
             delete(classpathVersionFile);
         } else {
             write(classpathVersionFile, mavenSettings.getArtifact().getVersion());
