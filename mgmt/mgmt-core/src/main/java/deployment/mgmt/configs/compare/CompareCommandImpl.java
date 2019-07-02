@@ -5,26 +5,53 @@ import deployment.mgmt.configs.componentgroup.ComponentGroupService;
 import deployment.mgmt.configs.componentgroup.GroupDescription;
 import deployment.mgmt.configs.diff.ShowDiffCommand;
 import deployment.mgmt.configs.fetch.ConfigFetcher;
-import deployment.mgmt.configs.filestructure.DeployFileStructure;
+import deployment.mgmt.configs.filestructure.TempDeployFileStructureDecorator;
 import deployment.mgmt.configs.service.properties.PropertyService;
 import deployment.mgmt.microconfig.factory.MgmtMicroConfigAdapter;
 import lombok.RequiredArgsConstructor;
 
+import java.io.File;
+import java.io.IOException;
+
 import static java.util.Collections.emptyList;
 import static java.util.Collections.singletonList;
+import static org.springframework.util.FileSystemUtils.copyRecursively;
 
 @RequiredArgsConstructor
 public class CompareCommandImpl implements CompareCommand {
     private final ConfigFetcher configFetcher;
     private final ComponentGroupService componentGroupService;
-    private final DeployFileStructure deployFileStructure;
+    private final TempDeployFileStructureDecorator deployFileStructure;
     private final PropertyService propertyService;
     private final ClasspathService classpathService;
     private final ShowDiffCommand showDiffCommand;
 
     @Override
     public void compareTo(String configVersion, String projectFullVersionOrPostfix) {
+        File mainComponentDir = componentDir();
+        File mainDeployService = deployDir();
+
+        deployFileStructure.toTemp();
+        try {
+            doClone(mainComponentDir, mainDeployService);
+            doCompare(configVersion, projectFullVersionOrPostfix);
+        } finally {
+            deployFileStructure.toMain();
+        }
+    }
+
+    private void doClone(File mainComponentDir, File mainDeployService) {
+        try {
+            copyRecursively(mainComponentDir, componentDir());
+            copyRecursively(mainDeployService, deployDir());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void doCompare(String configVersion, String projectFullVersionOrPostfix) {
         fetchConfigs(configVersion, projectFullVersionOrPostfix);
+
         buildAndCompareConfigs();
         buildAndCompareClasspath();
     }
@@ -40,7 +67,7 @@ public class CompareCommandImpl implements CompareCommand {
                 groupDescription.getEnv(),
                 singletonList(groupDescription.getGroup()),
                 emptyList(), deployFileStructure.configs().getMicroconfigSourcesRootDir(),
-                deployFileStructure.service().getComponentsDir()
+                componentDir()
         );
 
         showDiffCommand.showPropDiff();
@@ -53,5 +80,13 @@ public class CompareCommandImpl implements CompareCommand {
                 );
 
         showDiffCommand.showClasspathDiff();
+    }
+
+    private File componentDir() {
+        return deployFileStructure.service().getComponentsDir();
+    }
+
+    private File deployDir() {
+        return deployFileStructure.deploy().getDeploySettingsDir();
     }
 }

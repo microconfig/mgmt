@@ -32,6 +32,7 @@ import deployment.mgmt.configs.fetch.strategy.GitConfigStrategy;
 import deployment.mgmt.configs.fetch.strategy.NexusConfigStrategy;
 import deployment.mgmt.configs.filestructure.DeployFileStructure;
 import deployment.mgmt.configs.filestructure.DeployFileStructureImpl;
+import deployment.mgmt.configs.filestructure.TempDeployFileStructureDecorator;
 import deployment.mgmt.configs.service.metadata.MetadataProvider;
 import deployment.mgmt.configs.service.metadata.MetadataProviderImpl;
 import deployment.mgmt.configs.service.properties.PropertyService;
@@ -113,7 +114,7 @@ public class MgmtFactory {
     private final ConfigFetcher configFetcher;
 
     public MgmtFactory() {
-        this.deployFileStructure = DeployFileStructureImpl.init();
+        this.deployFileStructure = new TempDeployFileStructureDecorator();
         this.lockService = new OsLockService(deployFileStructure);
         FilesReader fileReader = new FsFilesReader();
         this.configIoService = new ConfigIoServiceSelector(
@@ -201,6 +202,7 @@ public class MgmtFactory {
     }
 
     private Mgmt mgmt() {
+        ShowDiffCommandImpl showDiffCommand = new ShowDiffCommandImpl(componentGroupService, propertyService, deployFileStructure, configIoService);
         return new MgmtImpl(
                 componentGroupService,
                 statusCommand,
@@ -208,10 +210,10 @@ public class MgmtFactory {
                 newStartCommand(),
                 stopService,
                 newInitService(),
-                new CompareCommandImpl(DeployFileStructureImpl.initToTempDir()),
+                new CompareCommandImpl(configFetcher, componentGroupService, deployFileStructure, propertyService, classpathService, showDiffCommand),
                 new EncryptPropertiesCommandImpl(deployFileStructure, configIoService),
                 updateConfigCommand,
-                new ShowDiffCommandImpl(componentGroupService, propertyService, deployFileStructure, configIoService),
+                showDiffCommand,
                 new LessLogCommand(propertyService, deployFileStructure),
                 deploySettings,
                 mgmgUpdater,
