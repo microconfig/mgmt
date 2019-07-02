@@ -37,6 +37,11 @@ public class ProcessDirsImpl implements ProcessDirs {
     }
 
     @Override
+    public File getProcessDiffFile(String service) {
+        return getProcessFile(service, "diff-process.properties");
+    }
+
+    @Override
     public File getLastCmdLineFile(String service) {
         return serviceDirs.getServiceFile(service, "last_cmd_line.mgmt");
     }

@@ -9,7 +9,7 @@ public interface ServiceDirs {
 
     File getServiceDir(String service);
 
-    File getDiffFile(String service);
+    File getServicePropertiesDiffFile(String service);
 
     File getServicePropertiesFile(String service);
 

@@ -27,7 +27,7 @@ public class ServiceDirsImpl implements ServiceDirs {
     }
 
     @Override
-    public File getDiffFile(String service) {
+    public File getServicePropertiesDiffFile(String service) {
         return getServiceFile(service, "diff-service.properties");
     }
 

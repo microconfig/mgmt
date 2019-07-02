@@ -19,6 +19,8 @@ public interface ProcessDirs {
 
     File getClasspathDiffFile(String service);
 
+    File getProcessDiffFile(String service);
+
     File createProcessFile(String service, String file);
 
     File getLastCmdLineFile(String service);

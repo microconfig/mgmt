@@ -51,7 +51,8 @@ public class ServiceGroupManagerImpl implements ServiceGroupManager {
             }
 
             if (CHANGED.nameEquals(group)) {
-                return deployFileStructure.service().getDiffFile(service).exists()
+                return deployFileStructure.service().getServicePropertiesDiffFile(service).exists()
+                        || deployFileStructure.process().getProcessDiffFile(service).exists()
                         || deployFileStructure.process().getClasspathDiffFile(service).exists();
             }
 
