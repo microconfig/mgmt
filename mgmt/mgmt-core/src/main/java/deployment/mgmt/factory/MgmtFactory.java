@@ -89,7 +89,7 @@ import static java.util.List.of;
 
 @Getter
 public class MgmtFactory {
-    private final DeployFileStructure deployFileStructure;
+    private final TempDeployFileStructureDecorator deployFileStructure;
     private final LockService lockService;
     private final ConfigIoService configIoService;
     private final ComponentGroupService componentGroupService;

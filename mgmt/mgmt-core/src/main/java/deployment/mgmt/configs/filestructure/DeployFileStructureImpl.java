@@ -15,17 +15,11 @@ public class DeployFileStructureImpl implements DeployFileStructure {
     private final ServiceLogDirs serviceLogDirs;
     private final ProcessDirs processDirs;
 
-    static DeployFileStructure init() {
-        return doInit(userHome());
+    public static DeployFileStructure init() {
+        return initTo(userHome());
     }
 
-    static DeployFileStructure initToTempDir() {
-        File tempDir = new File("temp_deploy");
-        delete(tempDir);
-        return doInit(tempDir);
-    }
-
-    private static DeployFileStructure doInit(File root) {
+    static DeployFileStructure initTo(File root) {
         ServiceDirs serviceDirs = ServiceDirsImpl.init(root);
         return new DeployFileStructureImpl(
                 DeployDirsImpl.init(root),

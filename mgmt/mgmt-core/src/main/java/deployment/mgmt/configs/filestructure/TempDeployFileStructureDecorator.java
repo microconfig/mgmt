@@ -3,6 +3,10 @@ package deployment.mgmt.configs.filestructure;
 import lombok.AllArgsConstructor;
 import lombok.experimental.Delegate;
 
+import java.io.File;
+
+import static io.microconfig.utils.FileUtils.delete;
+
 @AllArgsConstructor
 public class TempDeployFileStructureDecorator implements DeployFileStructure {
     @Delegate
@@ -15,7 +19,9 @@ public class TempDeployFileStructureDecorator implements DeployFileStructure {
     }
 
     public void toTemp() {
-        delegate = DeployFileStructureImpl.initToTempDir();
+        File tempDir = new File("temp_deploy");
+        delete(tempDir);
+        delegate = DeployFileStructureImpl.initTo(tempDir);
     }
 
     public void toMain() {
