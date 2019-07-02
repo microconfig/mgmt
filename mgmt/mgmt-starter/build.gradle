@@ -12,6 +12,26 @@ publishing {
             project.shadow.component(publication)
         }
     }
+
+    repositories {
+        maven { url "http://172.30.162.1/nexus/content/repositories/releases" }
+
+//        maven {
+//            credentials {
+//                username 'RiskPlatform-build'
+//                password 'RiskPlatformbuild'
+//            }
+//            url "http://nexus.sigma.sbrf.ru:8099/nexus/content/repositories/RiskPlatform_release"
+//        }
+//
+//        maven {
+//            credentials {
+//                username 'CI_CI00748735'
+//                password '7350++Bglm'
+//            }
+//            url "http://sbrf-nexus.sigma.sbrf.ru/nexus/content/repositories/RiskPlatform_release"
+//        }
+    }
 }
 
 dependencies {

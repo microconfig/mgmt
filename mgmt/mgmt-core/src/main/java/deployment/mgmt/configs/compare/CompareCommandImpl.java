@@ -36,6 +36,7 @@ public class CompareCommandImpl implements CompareCommand {
             doClone(mainComponentDir, mainDeployService);
             doCompare(configVersion, projectFullVersionOrPostfix);
         } finally {
+            deployFileStructure.cleanTempDir();
             deployFileStructure.toMain();
         }
     }

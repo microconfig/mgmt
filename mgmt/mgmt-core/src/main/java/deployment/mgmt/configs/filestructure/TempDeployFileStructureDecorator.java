@@ -6,6 +6,7 @@ import lombok.experimental.Delegate;
 import java.io.File;
 
 import static io.microconfig.utils.FileUtils.delete;
+import static io.microconfig.utils.FileUtils.userHome;
 
 @AllArgsConstructor
 public class TempDeployFileStructureDecorator implements DeployFileStructure {
@@ -19,12 +20,17 @@ public class TempDeployFileStructureDecorator implements DeployFileStructure {
     }
 
     public void toTemp() {
-        File tempDir = new File("temp_deploy");
-        delete(tempDir);
+        File tempDir = cleanTempDir();
         delegate = DeployFileStructureImpl.initTo(tempDir);
     }
 
     public void toMain() {
         delegate = main;
+    }
+
+    public File cleanTempDir() {
+        File tempDir = new File(userHome(), "temp_deploy");
+        delete(tempDir);
+        return tempDir;
     }
 }
