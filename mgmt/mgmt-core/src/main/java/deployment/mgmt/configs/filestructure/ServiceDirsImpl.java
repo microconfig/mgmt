@@ -5,11 +5,15 @@ import lombok.RequiredArgsConstructor;
 import java.io.File;
 
 import static io.microconfig.utils.FileUtils.createDir;
-import static io.microconfig.utils.FileUtils.userHome;
+import static lombok.AccessLevel.PRIVATE;
 
-@RequiredArgsConstructor
+@RequiredArgsConstructor(access = PRIVATE)
 public class ServiceDirsImpl implements ServiceDirs {
-    private final File componentsDir = createDir(new File(userHome(), "components"));
+    private final File componentsDir;
+
+    public static ServiceDirs init(File root) {
+        return new ServiceDirsImpl(createDir(new File(root, "components")));
+    }
 
     @Override
     public File getComponentsDir() {

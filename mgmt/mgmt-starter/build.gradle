@@ -18,6 +18,5 @@ dependencies {
     implementation project(':mgmt:mgmt-core'),
             project(':mgmt:console-api-exposer'),
             project(':mgmt:mgmt-utils'),
-            lib.microconfig_core,
-            lib.microconfig_utils
+            lib.microconfig_core            
 }

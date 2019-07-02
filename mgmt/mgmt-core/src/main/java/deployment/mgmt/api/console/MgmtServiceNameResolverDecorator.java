@@ -148,6 +148,11 @@ public class MgmtServiceNameResolverDecorator implements Mgmt {
     }
 
     @Override
+    public void compareTo(String configVersion, String projectFullVersionOrPostfix) {
+        delegate.compareTo(configVersion, projectFullVersionOrPostfix);
+    }
+
+    @Override
     public void setConfigGitUrl(String configGitUrl) {
         delegate.setConfigGitUrl(configGitUrl);
     }

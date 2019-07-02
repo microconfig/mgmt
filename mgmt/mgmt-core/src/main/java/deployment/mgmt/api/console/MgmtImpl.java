@@ -1,5 +1,6 @@
 package deployment.mgmt.api.console;
 
+import deployment.mgmt.configs.compare.CompareCommand;
 import deployment.mgmt.configs.componentgroup.ComponentGroupService;
 import deployment.mgmt.configs.componentgroup.ServiceDescription;
 import deployment.mgmt.configs.componentgroup.ServiceGroupManager;
@@ -47,6 +48,7 @@ public class MgmtImpl implements Mgmt {
     private final StopService stopService;
 
     private final InitService initService;
+    private final CompareCommand compareCommand;
     private final EncryptPropertiesCommand encryptPropertiesCommand;
     private final UpdateConfigCommand updateConfigCommand;
     private final ShowDiffCommand showDiffCommand;
@@ -108,6 +110,11 @@ public class MgmtImpl implements Mgmt {
     @Override
     public void init(String configVersion, String projectFullVersionOrPostfix) {
         initService.init(configVersion, projectFullVersionOrPostfix);
+    }
+
+    @Override
+    public void compareTo(String configVersion, String projectFullVersionOrPostfix) {
+        compareCommand.compareTo(configVersion, projectFullVersionOrPostfix);
     }
 
     @Override

@@ -17,6 +17,7 @@ import deployment.mgmt.atrifacts.strategies.classpathfile.ClasspathFileStrategy;
 import deployment.mgmt.atrifacts.strategies.classpathfile.JarClasspathFileReaderImpl;
 import deployment.mgmt.atrifacts.strategies.classpathfile.UnknownGroupResolverImpl;
 import deployment.mgmt.atrifacts.strategies.nexus.NexusClasspathStrategy;
+import deployment.mgmt.configs.compare.CompareCommandImpl;
 import deployment.mgmt.configs.componentgroup.ComponentGroupService;
 import deployment.mgmt.configs.componentgroup.ComponentGroupServiceImpl;
 import deployment.mgmt.configs.componentgroup.ServiceGroupManagerImpl;
@@ -207,6 +208,7 @@ public class MgmtFactory {
                 newStartCommand(),
                 stopService,
                 newInitService(),
+                new CompareCommandImpl(DeployFileStructureImpl.initToTempDir()),
                 new EncryptPropertiesCommandImpl(deployFileStructure, configIoService),
                 updateConfigCommand,
                 new ShowDiffCommandImpl(componentGroupService, propertyService, deployFileStructure, configIoService),

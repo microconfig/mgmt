@@ -36,16 +36,8 @@ allprojects {
         mavenCentral()
     }
 
-//    publishing {
-//        publications {
-//            nexus(MavenPublication) {
-//                from components.java
-//            }
-//        }
-//    }
-
     dependencies {
-        implementation platform("org.springframework.boot:spring-boot-dependencies:2.1.5.RELEASE")
+        implementation platform("org.springframework.boot:spring-boot-dependencies:2.1.6.RELEASE")
 
         compileOnly lib.lombok
         annotationProcessor lib.lombok

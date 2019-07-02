@@ -39,6 +39,11 @@ public class MgmtLockDecorator implements Mgmt {
     }
 
     @Override
+    public void compareTo(String configVersion, String projectFullVersionOrPostfix) {
+        lockService.lockAndExecute(()-> mgmt.compareTo(configVersion, projectFullVersionOrPostfix));
+    }
+
+    @Override
     public void smartDeploy(String configVersion, String projectFullVersionOrPostfix) {
         lockService.lockAndExecute(() -> mgmt.smartDeploy(configVersion, projectFullVersionOrPostfix));
     }

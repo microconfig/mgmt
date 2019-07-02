@@ -1,16 +1,25 @@
 package deployment.mgmt.configs.filestructure;
 
+import lombok.RequiredArgsConstructor;
+
 import java.io.File;
 import java.util.function.Function;
 
 import static io.microconfig.utils.FileUtils.createDir;
 import static io.microconfig.utils.FileUtils.userHome;
+import static lombok.AccessLevel.PRIVATE;
 
-
+@RequiredArgsConstructor(access = PRIVATE)
 public class ConfigDirsImpl implements ConfigDirs {
+    private final File configRootDir;
+
+    public static ConfigDirs init(File root) {
+        return new ConfigDirsImpl(createDir(new File(root, "config-repo")));
+    }
+
     @Override
     public File getConfigsRootDir() {
-        return createDir(new File(userHome(), "config-repo"));
+        return configRootDir;
     }
 
     @Override

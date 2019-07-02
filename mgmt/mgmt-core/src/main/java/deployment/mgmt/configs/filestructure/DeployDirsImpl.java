@@ -1,15 +1,25 @@
 package deployment.mgmt.configs.filestructure;
 
+import lombok.RequiredArgsConstructor;
+
 import java.io.File;
 
 import static io.microconfig.utils.FileUtils.createDir;
 import static io.microconfig.utils.FileUtils.userHome;
 import static io.microconfig.utils.OsUtil.isWindows;
+import static lombok.AccessLevel.PRIVATE;
 
+@RequiredArgsConstructor(access = PRIVATE)
 public class DeployDirsImpl implements DeployDirs {
+    private final File deployDir;
+
+    public static DeployDirs init(File root) {
+        return new DeployDirsImpl(createDir(new File(root, "deploy-settings")));
+    }
+
     @Override
     public File getDeploySettingsDir() {
-        return createDir(new File(userHome(), "deploy-settings"));
+        return deployDir;
     }
 
     @Override

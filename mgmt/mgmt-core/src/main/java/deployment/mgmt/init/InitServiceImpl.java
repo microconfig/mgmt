@@ -53,8 +53,6 @@ public class InitServiceImpl implements InitService {
 
     @Override
     public void init(String configVersion, String projectFullVersionOrPostfix) {
-        projectFullVersionOrPostfix = normalizeProjectVersion(configVersion, projectFullVersionOrPostfix);
-
         announce("Init with configs: " + configVersion + ", project: " + projectFullVersionOrPostfix);
         long t = currentTimeMillis();
 
@@ -79,6 +77,8 @@ public class InitServiceImpl implements InitService {
     }
 
     private void initConfigs(String configVersion, String projectFullVersionOrPostfix, UpdateConfigOption... options) {
+        projectFullVersionOrPostfix = normalizeProjectVersion(configVersion, projectFullVersionOrPostfix);
+
         Runnable configFetchCallback = () -> envDependenciesDownloader.downloadDependencies(componentGroupService.getEnv());
 
         initConfigsCommand.initConfigs(

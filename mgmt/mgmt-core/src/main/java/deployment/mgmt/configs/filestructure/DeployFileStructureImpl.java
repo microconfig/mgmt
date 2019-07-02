@@ -1,6 +1,12 @@
 package deployment.mgmt.configs.filestructure;
 
+import io.microconfig.utils.FileUtils;
 import lombok.RequiredArgsConstructor;
+
+import java.io.File;
+
+import static io.microconfig.utils.FileUtils.delete;
+import static io.microconfig.utils.FileUtils.userHome;
 
 @RequiredArgsConstructor
 public class DeployFileStructureImpl implements DeployFileStructure {
@@ -11,8 +17,23 @@ public class DeployFileStructureImpl implements DeployFileStructure {
     private final ProcessDirs processDirs;
 
     public static DeployFileStructure init() {
-        ServiceDirs serviceDirs = new ServiceDirsImpl();
-        return new DeployFileStructureImpl(new DeployDirsImpl(), new ConfigDirsImpl(), serviceDirs, new ServiceLogDirsImpl(serviceDirs), new ProcessDirsImpl(serviceDirs));
+        return doInit(userHome());
+    }
+
+    public static DeployFileStructure initToTempDir() {
+        File tempDir = new File("temp_deploy");
+        delete(tempDir);
+        return doInit(tempDir);
+    }
+
+    private static DeployFileStructure doInit(File root) {
+        ServiceDirs serviceDirs = ServiceDirsImpl.init(root);
+        return new DeployFileStructureImpl(
+                DeployDirsImpl.init(root),
+                ConfigDirsImpl.init(root),
+                serviceDirs,
+                new ServiceLogDirsImpl(serviceDirs), new ProcessDirsImpl(serviceDirs)
+        );
     }
 
     @Override

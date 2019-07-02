@@ -29,6 +29,10 @@ public interface Mgmt {
     void init(@ConsoleParam("configVersion") String configVersion,
               @ConsoleParam(value = "projectFullVersionOrPostfix", defaultValue = "-SNAPSHOT") String projectFullVersionOrPostfix);
 
+    @ConsoleOrder(7)
+    void compareTo(@ConsoleParam("configVersion") String configVersion,
+                   @ConsoleParam("projectFullVersionOrPostfix") String projectFullVersionOrPostfix);
+
     @Hidden
     default void init(String configVersion) {
         init(configVersion, SNAPSHOT);

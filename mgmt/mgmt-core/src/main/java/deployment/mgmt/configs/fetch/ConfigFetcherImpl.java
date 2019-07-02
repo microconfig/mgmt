@@ -56,7 +56,7 @@ public class ConfigFetcherImpl implements ConfigFetcher {
 
         delete(destination);
         if (!tempDestination.renameTo(destination)) {
-            throw new IllegalStateException("Can't rename temp config dir " + tempDestination);
+            throw new IllegalStateException("Can't rename initToTempDir config dir " + tempDestination);
         }
     }
 
