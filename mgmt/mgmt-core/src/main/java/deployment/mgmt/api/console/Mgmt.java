@@ -29,10 +29,6 @@ public interface Mgmt {
     void init(@ConsoleParam("configVersion") String configVersion,
               @ConsoleParam(value = "projectFullVersionOrPostfix", defaultValue = "-SNAPSHOT") String projectFullVersionOrPostfix);
 
-    @ConsoleOrder(7)
-    void compareTo(@ConsoleParam("configVersion") String configVersion,
-                   @ConsoleParam("projectFullVersionOrPostfix") String projectFullVersionOrPostfix);
-
     @Hidden
     default void init(String configVersion) {
         init(configVersion, SNAPSHOT);
@@ -74,53 +70,57 @@ public interface Mgmt {
     void classpathDiff(@ConsoleParam("serviceNames") String... services);
 
     @ConsoleOrder(13)
-    void fetchConfigs();
+    void compareTo(@ConsoleParam("configVersion") String configVersion,
+                   @ConsoleParam("projectFullVersionOrPostfix") String projectFullVersionOrPostfix);
 
     @ConsoleOrder(14)
-    void buildConfigs();
+    void fetchConfigs();
 
     @ConsoleOrder(15)
-    void resetConfigs();
+    void buildConfigs();
 
     @ConsoleOrder(16)
-    void properties(@ConsoleParam("propertyName") String name);
+    void resetConfigs();
 
     @ConsoleOrder(17)
-    void encryptProperties();
+    void properties(@ConsoleParam("propertyName") String name);
 
     @ConsoleOrder(18)
-    void newReleases(@ConsoleParam("serviceNames") String... services);
+    void encryptProperties();
 
     @ConsoleOrder(19)
+    void newReleases(@ConsoleParam("serviceNames") String... services);
+
+    @ConsoleOrder(20)
     void ssh(@ConsoleParam(value = "env", defaultValue = "current") String env, @ConsoleParam("group") String group);
 
     @Hidden
     void ssh(String group);
 
-    @ConsoleOrder(20)
+    @ConsoleOrder(21)
     void executeRemotely(@ConsoleParam("env:group or group") String envGroup, @ConsoleParam("command") String... command);
 
-    @ConsoleOrder(21)
+    @ConsoleOrder(22)
     void memoryUsage();
 
-    @ConsoleOrder(22)
+    @ConsoleOrder(23)
     void setConfigGitUrl(@ConsoleParam("configGitUrl") String configGitUrl);
 
-    @ConsoleOrder(23)
+    @ConsoleOrder(24)
     void setNexusCredential(@ConsoleParam("login:password") String credentials);
 
-    @ConsoleOrder(24)
+    @ConsoleOrder(25)
     void setConfigSource(@ConsoleParam("git or nexus") String configSource);
 
-    @ConsoleOrder(25)
+    @ConsoleOrder(26)
     void strictMode(@ConsoleParam("true or false") boolean enable);
 
-    @ConsoleOrder(26)
+    @ConsoleOrder(27)
     void version();
 
-    @ConsoleOrder(27)
+    @ConsoleOrder(28)
     void update(@ConsoleParam("mgmtVersion") String minVersion);
 
-    @ConsoleOrder(28)
+    @ConsoleOrder(29)
     void updateOnEveryNode(@ConsoleParam("mgmtVersion") String minVersion);
 }

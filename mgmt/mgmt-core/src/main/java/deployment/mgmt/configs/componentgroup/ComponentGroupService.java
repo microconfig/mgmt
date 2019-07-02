@@ -18,7 +18,6 @@ public interface ComponentGroupService {
         return getDescription().getEnv();
     }
 
-
     List<String> getServices();
 
     void changeServiceVersion(ServiceDescription newService);
