@@ -24,17 +24,15 @@ public class ShowDiffCommandImpl implements ShowDiffCommand {
 
     @Override
     public void showPropDiff(String... services) {
-        Consumer<Function<String, File>> diffPrinter = fileFetcher -> {
-            showDiff(services, fileFetcher, f -> configIo.read(f).propertiesAsMap().forEach(this::colorOutput));
-        };
-
-        diffPrinter.accept(deployFileStructure.service()::getServicePropertiesDiffFile);
-        diffPrinter.accept(deployFileStructure.process()::getProcessDiffFile);
+        doShow(services,
+                deployFileStructure.service()::getServicePropertiesDiffFile,
+                f -> configIo.read(f).propertiesAsMap().forEach(this::colorOutput)
+        );
     }
 
     @Override
     public void showClasspathDiff(String... services) {
-        showDiff(services,
+        doShow(services,
                 deployFileStructure.process()::getClasspathDiffFile,
                 f -> info(readFully(f))
         );
@@ -49,12 +47,12 @@ public class ShowDiffCommandImpl implements ShowDiffCommand {
         });
     }
 
-    private void showDiff(String[] services, Function<String, File> fileFetcher, Consumer<File> writer) {
+    private void doShow(String[] services, Function<String, File> fileFetcher, Consumer<File> writer) {
         of(services).forEach(s -> {
             File file = fileFetcher.apply(s);
             if (!file.exists()) return;
 
-            announce(s + " " + file.getName() + ":");
+            announce(s + ":");
             writer.accept(file);
             logLineBreak();
         });
