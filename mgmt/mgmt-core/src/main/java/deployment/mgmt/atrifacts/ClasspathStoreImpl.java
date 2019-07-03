@@ -47,7 +47,7 @@ public class ClasspathStoreImpl implements ClasspathStore {
 
         File serviceDir = deployFileStructure.service().getServiceDir(service);
         return stream(classpath.split(pathSeparator))
-                .map(path -> new File(serviceDir, path))
+                .map(path -> path.startsWith(".") ?  new File(serviceDir, path) : new File(path))
                 .collect(toList());
     }
 
