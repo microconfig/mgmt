@@ -15,6 +15,7 @@ import java.nio.file.Path;
 import java.util.List;
 
 import static io.microconfig.utils.FileUtils.delete;
+import static io.microconfig.utils.Logger.announce;
 import static io.microconfig.utils.Logger.warn;
 import static java.util.Collections.emptyList;
 import static java.util.Collections.singletonList;
@@ -31,6 +32,8 @@ public class CompareCommandImpl implements CompareCommand {
 
     @Override
     public void compareTo(String configVersion, String projectFullVersion) {
+        announce("Building configs for comparison: " + configVersion + "," + projectFullVersion);
+
         Path dir = componentsCopier.cloneToTemp(configVersion, projectFullVersion);
         deployFileStructure.changeRootDir(dir);
 
@@ -38,7 +41,7 @@ public class CompareCommandImpl implements CompareCommand {
             doCompare(configVersion, projectFullVersion);
         } finally {
             deployFileStructure.undo();
-            delete(dir.toFile());
+//            delete(dir.toFile());
         }
     }
 
@@ -47,6 +50,7 @@ public class CompareCommandImpl implements CompareCommand {
 
         buildConfigs();
         buildClasspath();
+
         showDiff();
     }
 
@@ -76,10 +80,10 @@ public class CompareCommandImpl implements CompareCommand {
     private void showDiff() {
         List<String> services = componentGroupService.getServices();
 
-        warn("\n\nPROPERTIES DIFF:");
+        announce("\n****************");
+        warn("\nPROPERTIES DIFF:");
         showDiffCommand.showPropDiff(services);
-
-        warn("\n\nCLASSPATH DIFF:");
+        warn("\nCLASSPATH DIFF:");
         showDiffCommand.showClasspathDiff(services);
     }
 

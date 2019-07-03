@@ -38,7 +38,7 @@ public class ComponentsCopierImpl implements ComponentsCopier {
         componentGroupService.getServices().forEach(service -> {
             copy.accept(deployFileStructure.service().getServicePropertiesFile(service));
             copy.accept(deployFileStructure.process().getProcessPropertiesFile(service));
-            copy.accept(deployFileStructure.process().getClasspathFile(service));
+            copyWithoutMeaninglessValues(deployFileStructure.process().getClasspathFile(service), destinationDir, null, null);
         });
     }
 
@@ -52,10 +52,14 @@ public class ComponentsCopierImpl implements ComponentsCopier {
     }
 
     private void copyWithoutMeaninglessValues(File source, File destinationDir, String newConfigVersion, String newProjectFullVersion) {
-        String value = readFully(source)
-                .replace(deploySettings.getConfigVersion(), newConfigVersion)
-                .replace(deploySettings.getProjectVersion(), newProjectFullVersion)
-                .replace(userHomeString(), destinationTempDir().getAbsolutePath());
+        String value = readFully(source).replace(userHomeString(), destinationTempDir().getAbsolutePath());
+
+        if (newConfigVersion != null) {
+            value = value.replace(deploySettings.getConfigVersion(), newConfigVersion);
+        }
+        if (newProjectFullVersion != null) {
+            value = value.replace(deploySettings.getProjectVersion(), newProjectFullVersion);
+        }
 
         File to = new File(destinationDir, source.getAbsolutePath().replace(userHomeString(), ""));
         write(to, value);
