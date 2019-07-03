@@ -6,7 +6,6 @@ import java.io.File;
 import java.util.function.Function;
 
 import static io.microconfig.utils.FileUtils.createDir;
-import static io.microconfig.utils.FileUtils.userHome;
 import static lombok.AccessLevel.PRIVATE;
 
 @RequiredArgsConstructor(access = PRIVATE)

@@ -8,7 +8,6 @@ import deployment.mgmt.configs.service.properties.PropertyService;
 import lombok.RequiredArgsConstructor;
 
 import java.io.File;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -87,7 +86,7 @@ public class ClasspathStoreImpl implements ClasspathStore {
 
     private void storeClasspath(String service, List<File> artifacts, ProcessProperties processProperties) {
         write(classpathPrependFile(service), processProperties.getJavaAppSettings().getClasspathPrepend());
-        write(classpathFile(service), join(artifacts, service));
+        write(classpathFile(service), pathToString(artifacts));
 
         String outFileName = processProperties.getMavenSettings().getOutFileName();
         if (outFileName != null) {
@@ -105,13 +104,10 @@ public class ClasspathStoreImpl implements ClasspathStore {
         }
     }
 
-    private String join(List<File> artifacts, String service) {
-        Path serviceDir = deployFileStructure.service().getServiceDir(service).toPath();
+    private String pathToString(List<File> artifacts) {
         return artifacts.stream()
                 .filter(Objects::nonNull)
-                .map(File::toPath)
-                .map(serviceDir::relativize)
-                .map(Path::toString)
+                .map(File::getAbsolutePath)
                 .collect(joining(pathSeparator + LINE_SEPARATOR));
     }
 

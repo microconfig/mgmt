@@ -26,6 +26,8 @@ public interface DeploySettings {
 
     void setConfigVersion(String branch);
 
+    String getProjectVersion();
+
 
     NexusRepository getNexusReleaseRepository();
 

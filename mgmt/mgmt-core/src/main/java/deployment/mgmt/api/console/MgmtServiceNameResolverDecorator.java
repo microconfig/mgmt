@@ -148,8 +148,8 @@ public class MgmtServiceNameResolverDecorator implements Mgmt {
     }
 
     @Override
-    public void compareTo(String configVersion, String projectFullVersionOrPostfix) {
-        delegate.compareTo(configVersion, projectFullVersionOrPostfix);
+    public void compareTo(String configVersion, String projectFullVersion) {
+        delegate.compareTo(configVersion, projectFullVersion);
     }
 
     @Override

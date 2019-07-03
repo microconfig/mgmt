@@ -99,6 +99,11 @@ public class DeploySettingsImpl implements DeploySettings {
     }
 
     @Override
+    public String getProjectVersion() {
+        return componentGroupService.getProjectVersion();
+    }
+
+    @Override
     public Credentials getNexusCredentials() {
         Credentials credentials = this.nexusCredentialCache; //todo2 to decorator
         if (credentials == null) {

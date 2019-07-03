@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 
 import java.io.File;
 
-import static io.microconfig.utils.FileUtils.delete;
 import static io.microconfig.utils.FileUtils.userHome;
 
 @RequiredArgsConstructor
@@ -25,7 +24,8 @@ public class DeployFileStructureImpl implements DeployFileStructure {
                 DeployDirsImpl.init(root),
                 ConfigDirsImpl.init(root),
                 serviceDirs,
-                new ServiceLogDirsImpl(serviceDirs), new ProcessDirsImpl(serviceDirs)
+                new ServiceLogDirsImpl(serviceDirs),
+                new ProcessDirsImpl(serviceDirs)
         );
     }
 

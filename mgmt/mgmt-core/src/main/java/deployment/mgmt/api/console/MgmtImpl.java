@@ -114,8 +114,8 @@ public class MgmtImpl implements Mgmt {
     }
 
     @Override
-    public void compareTo(String configVersion, String projectFullVersionOrPostfix) {
-        compareCommand.compareTo(configVersion, projectFullVersionOrPostfix);
+    public void compareTo(String configVersion, String projectFullVersion) {
+        compareCommand.compareTo(configVersion, projectFullVersion);
     }
 
     @Override

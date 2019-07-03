@@ -71,7 +71,12 @@ public interface Mgmt {
 
     @ConsoleOrder(13)
     void compareTo(@ConsoleParam("configVersion") String configVersion,
-                   @ConsoleParam("projectFullVersionOrPostfix") String projectFullVersionOrPostfix);
+                   @ConsoleParam(value = "projectFullVersion", defaultValue = "${configVersion}") String projectFullVersion);
+
+    @Hidden
+    default void compareTo(@ConsoleParam("configVersion") String configVersion) {
+        compareTo(configVersion, configVersion);
+    }
 
     @ConsoleOrder(14)
     void fetchConfigs();

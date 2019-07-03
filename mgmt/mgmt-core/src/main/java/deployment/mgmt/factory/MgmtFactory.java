@@ -193,7 +193,7 @@ public class MgmtFactory {
     }
 
     public ComponentsCopier componentsCopier() {
-        return new ComponentsCopierImpl(deployFileStructure, componentGroupService);
+        return new ComponentsCopierImpl(deploySettings, componentGroupService, deployFileStructure);
     }
 
     public Mgmt getMgmt() {

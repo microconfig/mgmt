@@ -1,10 +1,9 @@
 package deployment.mgmt.configs.compare;
 
 import deployment.mgmt.configs.componentgroup.ComponentGroupService;
+import deployment.mgmt.configs.deploysettings.DeploySettings;
 import deployment.mgmt.configs.filestructure.DeployFileStructure;
-import io.microconfig.utils.FileUtils;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.compress.compressors.FileNameUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,25 +11,28 @@ import java.nio.file.Path;
 import java.util.function.Consumer;
 
 import static io.microconfig.utils.FileUtils.*;
+import static io.microconfig.utils.IoUtils.readFully;
 import static org.springframework.util.FileSystemUtils.copyRecursively;
 
 @RequiredArgsConstructor
 public class ComponentsCopierImpl implements ComponentsCopier {
-    private final DeployFileStructure deployFileStructure;
+    private final DeploySettings deploySettings;
     private final ComponentGroupService componentGroupService;
+    private final DeployFileStructure deployFileStructure;
 
     @Override
-    public Path cloneToTemp() {
+    public Path cloneToTemp(String newConfigVersion, String newProjectFullVersion) {
         File destinationDir = destinationTempDir();
+        delete(destinationDir);
 
-        copyComponents(destinationDir);
+        copyComponents(destinationDir, newConfigVersion, newProjectFullVersion);
         copyDeploySettings(destinationDir);
 
         return destinationDir.toPath();
     }
 
-    private void copyComponents(File destinationDir) {
-        Consumer<File> copy = f -> copyFile(f, destinationDir);
+    private void copyComponents(File destinationDir, String newConfigVersion, String newProjectFullVersion) {
+        Consumer<File> copy = f -> copyWithoutMeaninglessValues(f, destinationDir, newConfigVersion, newProjectFullVersion);
 
         copy.accept(deployFileStructure.service().getServiceListFile());
         componentGroupService.getServices().forEach(service -> {
@@ -49,15 +51,17 @@ public class ComponentsCopierImpl implements ComponentsCopier {
         }
     }
 
-    private void copyFile(File file, File destinationDir) {
-        File to = new File(destinationDir, file.getAbsolutePath().replace(userHomeString(), "")); //todo
-        FileUtils.createFile(to);
-        FileUtils.copy(file, to);
+    private void copyWithoutMeaninglessValues(File source, File destinationDir, String newConfigVersion, String newProjectFullVersion) {
+        String value = readFully(source)
+                .replace(deploySettings.getConfigVersion(), newConfigVersion)
+                .replace(deploySettings.getProjectVersion(), newProjectFullVersion)
+                .replace(userHomeString(), destinationTempDir().getAbsolutePath());
+
+        File to = new File(destinationDir, source.getAbsolutePath().replace(userHomeString(), ""));
+        write(to, value);
     }
 
     private File destinationTempDir() {
-        File dir = new File(userHome(), "temp_deploy");
-        delete(dir);
-        return dir;
+        return new File(userHome(), "temp_deploy");
     }
 }

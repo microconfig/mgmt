@@ -22,7 +22,6 @@ public interface ComponentGroupService {
 
     void changeServiceVersion(ServiceDescription newService);
 
-
     List<ServiceDescription> getAlteredServices();
 
     Optional<ServiceDescription> getAlteredVersionService(String service);
