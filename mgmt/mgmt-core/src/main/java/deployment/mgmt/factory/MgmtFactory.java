@@ -18,6 +18,8 @@ import deployment.mgmt.atrifacts.strategies.classpathfile.JarClasspathFileReader
 import deployment.mgmt.atrifacts.strategies.classpathfile.UnknownGroupResolverImpl;
 import deployment.mgmt.atrifacts.strategies.nexus.NexusClasspathStrategy;
 import deployment.mgmt.configs.compare.CompareCommandImpl;
+import deployment.mgmt.configs.compare.ComponentsCopier;
+import deployment.mgmt.configs.compare.ComponentsCopierImpl;
 import deployment.mgmt.configs.componentgroup.ComponentGroupService;
 import deployment.mgmt.configs.componentgroup.ComponentGroupServiceImpl;
 import deployment.mgmt.configs.componentgroup.ServiceGroupManagerImpl;
@@ -190,6 +192,10 @@ public class MgmtFactory {
                 deployFileStructure,
                 propertyService
         );
+    }
+
+    public ComponentsCopier componentsCopier() {
+        return new ComponentsCopierImpl(deployFileStructure, componentGroupService);
     }
 
     public Mgmt getMgmt() {

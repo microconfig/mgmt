@@ -11,14 +11,14 @@ import deployment.mgmt.microconfig.factory.MgmtMicroConfigAdapter;
 import lombok.RequiredArgsConstructor;
 
 import java.io.File;
-import java.io.IOException;
+import java.nio.file.Path;
 
 import static java.util.Collections.emptyList;
 import static java.util.Collections.singletonList;
-import static org.springframework.util.FileSystemUtils.copyRecursively;
 
 @RequiredArgsConstructor
 public class CompareCommandImpl implements CompareCommand {
+    private final ComponentsCopier componentsCopier;
     private final ConfigFetcher configFetcher;
     private final ComponentGroupService componentGroupService;
     private final TempDeployFileStructureDecorator deployFileStructure;
@@ -28,25 +28,12 @@ public class CompareCommandImpl implements CompareCommand {
 
     @Override
     public void compareTo(String configVersion, String projectFullVersionOrPostfix) {
-        File mainComponentDir = componentDir();
-        File mainDeployService = deployDir();
-
-        deployFileStructure.toTemp();
+        Path dir = componentsCopier.cloneToTemp();
+        deployFileStructure.changeRootDir(dir);
         try {
-            doClone(mainComponentDir, mainDeployService);
             doCompare(configVersion, projectFullVersionOrPostfix);
         } finally {
-            deployFileStructure.cleanTempDir();
-            deployFileStructure.toMain();
-        }
-    }
-
-    private void doClone(File mainComponentDir, File mainDeployService) {
-        try {
-            copyRecursively(mainComponentDir, componentDir());
-            copyRecursively(mainDeployService, deployDir());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+            deployFileStructure.undo();
         }
     }
 
@@ -85,9 +72,5 @@ public class CompareCommandImpl implements CompareCommand {
 
     private File componentDir() {
         return deployFileStructure.service().getComponentsDir();
-    }
-
-    private File deployDir() {
-        return deployFileStructure.deploy().getDeploySettingsDir();
     }
 }
