@@ -1,9 +1,11 @@
 package deployment.mgmt.configs.diff;
 
-public interface ShowDiffCommand {
-    void showPropDiff(String... service);
+import java.util.List;
 
-    void showClasspathDiff(String... services);
+public interface ShowDiffCommand {
+    void showPropDiff(List<String> service);
+
+    void showClasspathDiff(List<String> services);
 
     void printProperties(String name);
 }

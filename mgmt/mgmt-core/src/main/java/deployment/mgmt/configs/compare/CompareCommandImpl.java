@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import java.io.File;
 import java.nio.file.Path;
 
+import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
 import static java.util.Collections.singletonList;
 
@@ -58,7 +59,7 @@ public class CompareCommandImpl implements CompareCommand {
                 componentDir()
         );
 
-        showDiffCommand.showPropDiff();
+        showDiffCommand.showPropDiff(componentGroupService.getServices());
     }
 
     private void buildAndCompareClasspath() {
@@ -67,7 +68,7 @@ public class CompareCommandImpl implements CompareCommand {
                         .buildUsing(propertyService.getProcessProperties(service))
                 );
 
-        showDiffCommand.showClasspathDiff();
+        showDiffCommand.showClasspathDiff(componentGroupService.getServices());
     }
 
     private File componentDir() {

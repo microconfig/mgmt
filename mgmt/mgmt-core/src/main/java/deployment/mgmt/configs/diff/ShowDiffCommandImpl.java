@@ -7,13 +7,13 @@ import io.microconfig.configs.io.ioservice.ConfigIoService;
 import lombok.RequiredArgsConstructor;
 
 import java.io.File;
+import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
 import static io.microconfig.utils.ConsoleColor.*;
 import static io.microconfig.utils.IoUtils.readFully;
 import static io.microconfig.utils.Logger.*;
-import static java.util.stream.Stream.of;
 
 @RequiredArgsConstructor
 public class ShowDiffCommandImpl implements ShowDiffCommand {
@@ -23,7 +23,7 @@ public class ShowDiffCommandImpl implements ShowDiffCommand {
     private final ConfigIoService configIo;
 
     @Override
-    public void showPropDiff(String... services) {
+    public void showPropDiff(List<String> services) {
         Consumer<Function<String, File>> diffPrinter = fileFetcher -> {
             showDiff(services, fileFetcher, f -> configIo.read(f).propertiesAsMap().forEach(this::colorOutput));
         };
@@ -33,7 +33,7 @@ public class ShowDiffCommandImpl implements ShowDiffCommand {
     }
 
     @Override
-    public void showClasspathDiff(String... services) {
+    public void showClasspathDiff(List<String> services) {
         showDiff(services,
                 deployFileStructure.process()::getClasspathDiffFile,
                 f -> info(readFully(f))
@@ -49,8 +49,8 @@ public class ShowDiffCommandImpl implements ShowDiffCommand {
         });
     }
 
-    private void showDiff(String[] services, Function<String, File> fileFetcher, Consumer<File> writer) {
-        of(services).forEach(s -> {
+    private void showDiff(List<String> services, Function<String, File> fileFetcher, Consumer<File> writer) {
+        services.forEach(s -> {
             File file = fileFetcher.apply(s);
             if (!file.exists()) return;
 

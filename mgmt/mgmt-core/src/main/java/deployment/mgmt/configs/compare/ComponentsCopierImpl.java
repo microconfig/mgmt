@@ -4,12 +4,15 @@ import deployment.mgmt.configs.componentgroup.ComponentGroupService;
 import deployment.mgmt.configs.filestructure.DeployFileStructure;
 import io.microconfig.utils.FileUtils;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.compress.compressors.FileNameUtil;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Path;
 import java.util.function.Consumer;
 
 import static io.microconfig.utils.FileUtils.*;
+import static org.springframework.util.FileSystemUtils.copyRecursively;
 
 @RequiredArgsConstructor
 public class ComponentsCopierImpl implements ComponentsCopier {
@@ -19,6 +22,14 @@ public class ComponentsCopierImpl implements ComponentsCopier {
     @Override
     public Path cloneToTemp() {
         File destinationDir = destinationTempDir();
+
+        copyComponents(destinationDir);
+        copyDeploySettings(destinationDir);
+
+        return destinationDir.toPath();
+    }
+
+    private void copyComponents(File destinationDir) {
         Consumer<File> copy = f -> copyFile(f, destinationDir);
 
         copy.accept(deployFileStructure.service().getServiceListFile());
@@ -27,8 +38,15 @@ public class ComponentsCopierImpl implements ComponentsCopier {
             copy.accept(deployFileStructure.process().getProcessPropertiesFile(service));
             copy.accept(deployFileStructure.process().getClasspathFile(service));
         });
+    }
 
-        return destinationDir.toPath();
+    private void copyDeploySettings(File destinationDir) {
+        try {
+            File from = deployFileStructure.deploy().getDeploySettingsDir();
+            copyRecursively(from, new File(destinationDir, from.getName()));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void copyFile(File file, File destinationDir) {

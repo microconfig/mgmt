@@ -36,6 +36,7 @@ import static io.microconfig.utils.SystemPropertiesUtils.hasSystemFlag;
 import static io.microconfig.utils.TimeUtils.secAfter;
 import static java.lang.String.join;
 import static java.lang.System.currentTimeMillis;
+import static java.util.Arrays.asList;
 import static java.util.List.of;
 
 //todo2 refactor
@@ -150,12 +151,12 @@ public class MgmtImpl implements Mgmt {
 
     @Override
     public void propertiesDiff(String... service) {
-        showDiffCommand.showPropDiff(service);
+        showDiffCommand.showPropDiff(asList(service));
     }
 
     @Override
     public void classpathDiff(String... services) {
-        showDiffCommand.showClasspathDiff(services);
+        showDiffCommand.showClasspathDiff(asList(services));
     }
 
     @Override

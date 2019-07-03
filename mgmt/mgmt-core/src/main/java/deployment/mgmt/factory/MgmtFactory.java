@@ -32,8 +32,6 @@ import deployment.mgmt.configs.fetch.ConfigFetcher;
 import deployment.mgmt.configs.fetch.ConfigFetcherImpl;
 import deployment.mgmt.configs.fetch.strategy.GitConfigStrategy;
 import deployment.mgmt.configs.fetch.strategy.NexusConfigStrategy;
-import deployment.mgmt.configs.filestructure.DeployFileStructure;
-import deployment.mgmt.configs.filestructure.DeployFileStructureImpl;
 import deployment.mgmt.configs.filestructure.TempDeployFileStructureDecorator;
 import deployment.mgmt.configs.service.metadata.MetadataProvider;
 import deployment.mgmt.configs.service.metadata.MetadataProviderImpl;
@@ -216,7 +214,7 @@ public class MgmtFactory {
                 newStartCommand(),
                 stopService,
                 newInitService(),
-                new CompareCommandImpl(configFetcher, componentGroupService, deployFileStructure, propertyService, classpathService, showDiffCommand),
+                new CompareCommandImpl(componentsCopier(), configFetcher, componentGroupService, deployFileStructure, propertyService, classpathService, showDiffCommand),
                 new EncryptPropertiesCommandImpl(deployFileStructure, configIoService),
                 updateConfigCommand,
                 showDiffCommand,
