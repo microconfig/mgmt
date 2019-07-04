@@ -3,6 +3,7 @@ package deployment.mgmt.configs.compare;
 import deployment.mgmt.configs.componentgroup.ComponentGroupService;
 import deployment.mgmt.configs.deploysettings.DeploySettings;
 import deployment.mgmt.configs.filestructure.DeployFileStructure;
+import io.microconfig.utils.FileUtils;
 import lombok.RequiredArgsConstructor;
 
 import java.io.File;
@@ -38,7 +39,8 @@ public class ComponentsCopierImpl implements ComponentsCopier {
         componentGroupService.getServices().forEach(service -> {
             copy.accept(deployFileStructure.service().getServicePropertiesFile(service));
             copy.accept(deployFileStructure.process().getProcessPropertiesFile(service));
-            copyWithoutMeaninglessValues(deployFileStructure.process().getClasspathFile(service), destinationDir, null, null);
+
+            doCopy(deployFileStructure.process().getClasspathFile(service), destinationDir);
         });
     }
 
@@ -52,17 +54,20 @@ public class ComponentsCopierImpl implements ComponentsCopier {
     }
 
     private void copyWithoutMeaninglessValues(File source, File destinationDir, String newConfigVersion, String newProjectFullVersion) {
-        String value = readFully(source).replace(userHomeString(), destinationTempDir().getAbsolutePath());
+        String value = readFully(source)
+                .replace(userHomeString(), destinationTempDir().getAbsolutePath())
+                .replace(deploySettings.getConfigVersion(), newConfigVersion)
+                .replace(deploySettings.getProjectVersion(), newProjectFullVersion);
 
-        if (newConfigVersion != null) {
-            value = value.replace(deploySettings.getConfigVersion(), newConfigVersion);
-        }
-        if (newProjectFullVersion != null) {
-            value = value.replace(deploySettings.getProjectVersion(), newProjectFullVersion);
-        }
+        write(buildToPath(source, destinationDir), value);
+    }
 
-        File to = new File(destinationDir, source.getAbsolutePath().replace(userHomeString(), ""));
-        write(to, value);
+    private void doCopy(File source, File destinationDir) {
+        FileUtils.copy(source, buildToPath(source, destinationDir));
+    }
+
+    private File buildToPath(File source, File destinationDir) {
+        return new File(destinationDir, source.getAbsolutePath().replace(userHomeString(), ""));
     }
 
     private File destinationTempDir() {
