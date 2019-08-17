@@ -12,21 +12,26 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Supplier;
 
 import static deployment.mgmt.atrifacts.Artifact.LOCAL_REPO_DIR;
+import static deployment.mgmt.atrifacts.Artifact.fromMavenString;
 import static deployment.mgmt.configs.service.properties.ClasspathStrategyType.NEXUS;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toMap;
 
 @RequiredArgsConstructor
 public class MavenSettingsImpl implements MavenSettings {
-    private static final String MAVEN_VERSION_KEY = "maven.version";
-
     private final ProcessProperties processProperties;
 
     @Override
     public Artifact getArtifact() {
-        return Artifact.fromMavenString(processProperties.get(MAVEN_VERSION_KEY));
+        Supplier<String> artifactValue = () -> {
+            String artifact = processProperties.get("maven.artifact");
+            return artifact != null ? artifact : processProperties.get("maven.version");
+        };
+
+        return fromMavenString(artifactValue.get());
     }
 
     @Override
