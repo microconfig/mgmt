@@ -52,10 +52,14 @@ public class MgmtScriptGeneratorImpl implements MgmtScriptGenerator {
 
     private String mgmtScript() {
         Supplier<String> healthcheck = () ->
-                "if [ \"$1\" = \"healthcheck\" ]; then\n"
-                        + deployFileStructure.configs().getMgmtScriptsDir() + "/commands/healthcheck.sh ${@:2}\n"
-                        + "  exit $?\n"
-                        + "fi\n\n";
+        {
+            String hcFile = deployFileStructure.configs().getMgmtScriptsDir() + "/commands/healthcheck.sh";
+            return "if [ \"$1\" = \"healthcheck\" ]; then\n"
+                    + "  chmod +x " + hcFile + "\n"
+                    + "  " +hcFile + " ${@:2}\n"
+                    + "  exit $?\n"
+                    + "fi\n\n";
+        };
 
         Supplier<String> deletePostScript = () ->
                 "post_mgmt_script='" + deployFileStructure.deploy().getPostMgmtScriptFile() + "'\n"
