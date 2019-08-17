@@ -60,7 +60,7 @@ public class ClasspathServiceImpl implements ClasspathService {
         private boolean updateNeeded(ProcessProperties processProperties) {
             Artifact artifact = processProperties.getMavenSettings().getArtifact();
             if (artifact == null) {
-                throw new IllegalArgumentException(service + " doesn't contains artifact property");
+                throw new IllegalArgumentException(service + " doesn't contains maven.artifact property in *.process config");
             }
             if (artifact.isSnapshot()) {
                 return !skipIfSnapshot || processProperties.isTask();
