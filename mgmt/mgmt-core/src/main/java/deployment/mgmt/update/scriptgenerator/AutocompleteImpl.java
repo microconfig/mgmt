@@ -18,6 +18,7 @@ import static java.util.stream.Collectors.joining;
 import static java.util.stream.Stream.concat;
 import static java.util.stream.Stream.of;
 
+//required bash-completion
 @RequiredArgsConstructor
 public class AutocompleteImpl implements Autocomplete {
     private final ComponentGroupService componentGroupService;
