@@ -1,6 +1,7 @@
 package deployment.mgmt.configs.filestructure;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.cglib.core.internal.Function;
 
 import java.io.File;
 
@@ -28,7 +29,9 @@ public class ServiceDirsImpl implements ServiceDirs {
 
     @Override
     public File getServicePropertiesDiffFile(String service) {
-        return getServiceFile(service, "diff-service.properties");
+        Function<String, File> diffFile = ext -> getServiceFile(service, "diff-service." + ext);
+        File properties = diffFile.apply("properties");
+        return properties.exists() ? properties : diffFile.apply("yaml");
     }
 
     @Override
