@@ -78,17 +78,17 @@ public class SshCommandImpl implements SshCommand {
     }
 
     private String sshTo(String env, String group) {
-        Optional<String> line = findCredentialsLine(group, env);
-        if (!line.isPresent()) {
+        Optional<String> credentialPair = findCredentialsLine(group, env);
+        if (!credentialPair.isPresent()) {
             warn("Can't find group " + group + " in " + env + " env");
             return null;
         }
 
-        String[] parts = line.get().split("\\s+");
+        String[] credentials = credentialPair.get().split("\\s+");
         return deployFileStructure.configs().getMgmtScriptsDir()
-                + "/sshpass -p " + parts[1]
+                + "/sshpass -p " + credentials[1]
                 + " ssh -o StrictHostKeyChecking=no "
-                + parts[0] + "@" + parts[2];
+                + credentials[0] + "@" + credentials[2];
     }
 
     private Optional<String> findCredentialsLine(String group, String currentEnv) {
