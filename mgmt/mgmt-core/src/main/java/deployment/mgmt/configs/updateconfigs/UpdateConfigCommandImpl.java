@@ -13,8 +13,7 @@ import java.util.List;
 
 import static deployment.mgmt.configs.updateconfigs.UpdateConfigOption.*;
 import static io.microconfig.utils.FileUtils.delete;
-import static io.microconfig.utils.Logger.announce;
-import static io.microconfig.utils.Logger.info;
+import static io.microconfig.utils.Logger.*;
 import static java.util.Collections.emptyList;
 import static java.util.Collections.singletonList;
 
@@ -46,7 +45,7 @@ public class UpdateConfigCommandImpl implements UpdateConfigCommand {
         servicesBeforeUpdate.parallelStream()
                 .filter(s -> !currentServices.contains(s))
                 .forEach(s -> {
-                    info("Deleted service " + s);
+                    warn("Deleted service " + s);
                     stopCommand.stop(s);
                     delete(deployFileStructure.service().getServiceDir(s));
                 });
