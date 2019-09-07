@@ -46,6 +46,7 @@ public class UpdateConfigCommandImpl implements UpdateConfigCommand {
         servicesBeforeUpdate.parallelStream()
                 .filter(s -> !currentServices.contains(s))
                 .forEach(s -> {
+                    info("Deleted service " + s);
                     stopCommand.stop(s);
                     delete(deployFileStructure.service().getServiceDir(s));
                 });
