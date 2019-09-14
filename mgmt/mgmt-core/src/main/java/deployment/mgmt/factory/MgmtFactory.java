@@ -80,6 +80,9 @@ import io.microconfig.utils.reader.FilesReader;
 import io.microconfig.utils.reader.FsFilesReader;
 import lombok.Getter;
 
+import java.util.List;
+
+import static io.microconfig.commands.buildconfig.features.templates.TemplatePattern.DEFAULT_TEMPLATE_PREFIX;
 import static io.microconfig.commands.buildconfig.features.templates.TemplatePattern.defaultPattern;
 import static io.microconfig.utils.CacheHandler.cache;
 import static java.util.Arrays.asList;
@@ -181,7 +184,7 @@ public class MgmtFactory {
     private TemplateService microconfigTemplateService() {
         return new TemplateServiceImpl(
                 new CopyTemplatesServiceImpl(
-                        defaultPattern().withTemplatePrefix("mgmt.template."),
+                        defaultPattern().withTemplatePrefixes(List.of("mgmt.template.", DEFAULT_TEMPLATE_PREFIX)),
                         new OldConfigsRelativePathResolver(deployFileStructure.configs().getConfigsRootDir())
                 ),
                 componentGroupService,
