@@ -13,10 +13,10 @@ public class InitTest {
         properties.put("skipConfigFetch", "true");
         properties.put("skipScripts", "true");
 
-        properties.put(ENV, "cr-dev6");
-        properties.put(GROUP, "cr_cassandra1");
-        properties.put(CONFIG_GIT_URL, "https://16805899@sbtatlas.sigma.sbrf.ru/stash/scm/rp/config.git");
-        properties.put(CONFIG_BRANCH_OR_TAG, "master");
+        properties.put(ENV, "dev");
+        properties.put(GROUP, "limit-manager");
+        properties.put(CONFIG_GIT_URL, "https://16805899@sbtatlas.sigma.sbrf.ru/stash/scm/lm/lm-configs.git");
+        properties.put(CONFIG_BRANCH_OR_TAG, "NLM-58.add_logback");
         properties.put(PROJECT_FULL_VERSION_OR_POSTFIX, "-SNAPSHOT");
         properties.put(NEXUS_CREDENTIALS, ":");
         properties.put(CONFIG_SOURCE, "GIT");

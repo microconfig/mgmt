@@ -29,14 +29,13 @@ public class ServiceDirsImpl implements ServiceDirs {
 
     @Override
     public File getServicePropertiesDiffFile(String service) {
-        Function<String, File> diffFile = ext -> getServiceFile(service, "diff-service." + ext);
-        File properties = diffFile.apply("properties");
-        return properties.exists() ? properties : diffFile.apply("yaml");
+        return propertiesOrYaml(service, "diff-service");
     }
 
     @Override
     public File getServicePropertiesFile(String service) {
-        return getServiceFile(service, "service.properties");
+        File oldName = propertiesOrYaml(service, "service");
+        return oldName.exists() ? oldName : propertiesOrYaml(service, "application");
     }
 
     @Override
@@ -44,9 +43,15 @@ public class ServiceDirsImpl implements ServiceDirs {
         return new File(getServiceDir(service), file);
     }
 
-
     @Override
     public File getPidFile(String service) {
         return getServiceFile(service, ".pid");
+    }
+
+    private File propertiesOrYaml(String service, String baseFileName) {
+        Function<String, File> getFile = ext -> getServiceFile(service, baseFileName + "." + ext);
+
+        File properties = getFile.apply("properties");
+        return properties.exists() ? properties : getFile.apply("yaml");
     }
 }
