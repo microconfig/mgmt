@@ -25,8 +25,8 @@ allprojects {
     group = 'jdeployment'
     version = rootProject.version
 
-    sourceCompatibility = 12
-    targetCompatibility = 12
+    sourceCompatibility = 10
+    targetCompatibility = 10
 
     repositories {
         mavenLocal()
