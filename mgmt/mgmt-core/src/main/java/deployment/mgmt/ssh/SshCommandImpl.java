@@ -85,8 +85,9 @@ public class SshCommandImpl implements SshCommand {
         }
 
         String[] credentials = credentialPair.get().split("\\s+");
+        String password = "?".equals(credentials[1]) ? credentials[0] : credentials[1];
         return deployFileStructure.configs().getMgmtScriptsDir()
-                + "/sshpass -p " + credentials[1]
+                + "/sshpass -p " + password
                 + " ssh -o StrictHostKeyChecking=no "
                 + credentials[0] + "@" + credentials[2];
     }
