@@ -4,7 +4,7 @@ version = "${major}.${minor}.${patch}${versionPostfix}"
 buildscript {
     repositories {
         mavenLocal()
-        if (org.gradle.internal.os.OperatingSystem.current().isWindows()) {
+        if (org.gradle.internal.os.OperatingSystem.current().isMacOsX()) {
             maven { url "http://172.30.162.1/nexus/content/groups/public" }
         }
         mavenCentral()        
@@ -30,7 +30,7 @@ allprojects {
 
     repositories {
         mavenLocal()
-        if (org.gradle.internal.os.OperatingSystem.current().isWindows()) {
+        if (org.gradle.internal.os.OperatingSystem.current().isMacOsX()) {
             maven { url "http://172.30.162.1/nexus/content/groups/public" }
         }
         mavenCentral()
