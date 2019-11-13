@@ -33,7 +33,6 @@ public class ByteReaderUtils {
                 if (read <= 0) break;
 
                 consumer.accept(bytes, read);
-                if (read < bytes.length) break;
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
