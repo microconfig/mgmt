@@ -1,7 +1,6 @@
 package deployment.mgmt.atrifacts.strategies.classpathfile;
 
 import deployment.mgmt.atrifacts.Artifact;
-
 import java.io.File;
 import java.util.List;
 import java.util.Objects;
@@ -12,7 +11,7 @@ import static java.util.Arrays.stream;
 import static java.util.Optional.of;
 import static java.util.stream.Collectors.toList;
 
-public class JarClasspathFileReaderImpl implements JarClasspathReader {
+public class MgmtClasspathFileReader implements JarClasspathReader {
     private static final String GRADLE_DIR = ".gradle/caches/modules-2/";//files-2.1/
 
     @Override //todo2 return list of missing artifacts

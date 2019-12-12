@@ -6,10 +6,12 @@ import lombok.ToString;
 
 import java.io.File;
 import java.util.*;
+import java.util.zip.ZipEntry;
 
 import static deployment.mgmt.atrifacts.Artifact.SNAPSHOT;
 import static deployment.mgmt.atrifacts.ArtifactType.JAR;
 import static deployment.mgmt.atrifacts.strategies.classpathfile.JarClasspathReader.CLASSPATH_FILE;
+import static deployment.mgmt.atrifacts.strategies.classpathfile.JarClasspathReader.CLASSPATH_GRADLE_FILE;
 import static deployment.mgmt.utils.ZipUtils.containsInnerFile;
 import static deployment.mgmt.utils.ZipUtils.forEachInnerFiles;
 import static io.microconfig.utils.FileUtils.write;
@@ -111,10 +113,10 @@ class ClasspathDiffBuilderImpl implements ClasspathDiffBuilder {
         }
 
         private static String doHash(File archive) {
-            if (archive.getName().endsWith(JAR.extension()) && containsInnerFile(archive, CLASSPATH_FILE)) {
+            if (archive.getName().endsWith(JAR.extension()) && containsClasspathFiles(archive)) {
                 List<Hasher> hashers = new ArrayList<>();
                 forEachInnerFiles(archive, (entry, is) -> {
-                    if (!entry.getName().equals(CLASSPATH_FILE)) {
+                    if (!isClasspathFile(entry)) {
                         hashers.add(new Hasher(entry.getName()).hash(is));
                     }
                 });
@@ -123,6 +125,15 @@ class ClasspathDiffBuilderImpl implements ClasspathDiffBuilder {
             }
 
             return new Hasher("").hash(archive).value();
+        }
+
+        private static boolean containsClasspathFiles(File archive) {
+            return containsInnerFile(archive, CLASSPATH_FILE) || containsInnerFile(archive, CLASSPATH_GRADLE_FILE);
+        }
+
+        private static boolean isClasspathFile(ZipEntry entry) {
+            String entryName = entry.getName();
+            return entryName.equals(CLASSPATH_FILE) || entryName.equals(CLASSPATH_GRADLE_FILE);
         }
 
         private static String artifactName(File file) {
