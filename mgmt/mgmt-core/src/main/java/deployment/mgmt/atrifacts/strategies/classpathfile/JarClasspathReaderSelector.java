@@ -15,9 +15,7 @@ public class JarClasspathReaderSelector implements JarClasspathReader {
 
     @Override
     public List<Artifact> extractClasspath(File artifactFile, Artifact artifact) {
-        JarClasspathReader classpathReader =
-                containsInnerFile(artifactFile, CLASSPATH_GRADLE_FILE) ? artifactClasspathReader : mgmtClasspathFileReader;
-
+        JarClasspathReader classpathReader = containsInnerFile(artifactFile, ARTIFACTS_FILE) ? artifactClasspathReader : mgmtClasspathFileReader;
         return classpathReader.extractClasspath(artifactFile, artifact);
     }
 }

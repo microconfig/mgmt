@@ -11,7 +11,7 @@ import java.util.zip.ZipEntry;
 import static deployment.mgmt.atrifacts.Artifact.SNAPSHOT;
 import static deployment.mgmt.atrifacts.ArtifactType.JAR;
 import static deployment.mgmt.atrifacts.strategies.classpathfile.JarClasspathReader.CLASSPATH_FILE;
-import static deployment.mgmt.atrifacts.strategies.classpathfile.JarClasspathReader.CLASSPATH_GRADLE_FILE;
+import static deployment.mgmt.atrifacts.strategies.classpathfile.JarClasspathReader.ARTIFACTS_FILE;
 import static deployment.mgmt.utils.ZipUtils.containsInnerFile;
 import static deployment.mgmt.utils.ZipUtils.forEachInnerFiles;
 import static io.microconfig.utils.FileUtils.write;
@@ -128,12 +128,12 @@ class ClasspathDiffBuilderImpl implements ClasspathDiffBuilder {
         }
 
         private static boolean containsClasspathFiles(File archive) {
-            return containsInnerFile(archive, CLASSPATH_FILE) || containsInnerFile(archive, CLASSPATH_GRADLE_FILE);
+            return containsInnerFile(archive, CLASSPATH_FILE) || containsInnerFile(archive, ARTIFACTS_FILE);
         }
 
         private static boolean isClasspathFile(ZipEntry entry) {
             String entryName = entry.getName();
-            return entryName.equals(CLASSPATH_FILE) || entryName.equals(CLASSPATH_GRADLE_FILE);
+            return entryName.equals(CLASSPATH_FILE) || entryName.equals(ARTIFACTS_FILE);
         }
 
         private static String artifactName(File file) {

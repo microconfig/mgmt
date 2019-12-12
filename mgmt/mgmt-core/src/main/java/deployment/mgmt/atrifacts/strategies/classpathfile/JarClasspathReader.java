@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface JarClasspathReader {
     String CLASSPATH_FILE = "classpath.mgmt";
-    String CLASSPATH_GRADLE_FILE = "classpath_gradle.mgmt";
+    String ARTIFACTS_FILE = "artifacts.mgmt";
 
     List<Artifact> extractClasspath(File artifactFile, Artifact artifact);
 }

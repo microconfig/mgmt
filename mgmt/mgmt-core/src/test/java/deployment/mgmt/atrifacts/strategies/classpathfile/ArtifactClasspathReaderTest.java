@@ -12,7 +12,7 @@ import java.util.List;
 import static java.util.stream.Collectors.toList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class ArtifactClasspathReaderTest {
+class ArtifactClasspathReaderTest {
     private ArtifactClasspathReader artifactClasspathReader;
 
     @BeforeEach
@@ -21,7 +21,7 @@ public class ArtifactClasspathReaderTest {
     }
 
     @Test
-    public void shouldCorrectlyCollectClasspathArtifacts() {
+    void shouldCorrectlyCollectClasspathArtifacts() {
         List<String> expected = List.of(
                 "antlr:antlr:2.7.7",
                 "com.fasterxml.jackson.core:jackson-annotations:2.9.0",
