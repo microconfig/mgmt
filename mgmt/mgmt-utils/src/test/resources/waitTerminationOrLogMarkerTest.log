@@ -1,0 +1,8 @@
+2019-12-09 18:53:01,542 INFO  Logging initialized @4281ms [main][log]org.eclipse.jetty.util.log
+2019-12-09 18:53:01,624 WARN  Acceptors should be <= availableProcessors: NetworkTrafficServerConnector@39aa45a1{HTTP/1.1}{0.0.0.0:0} [main][NetworkTrafficServerConnector]org.eclipse.jetty.server.NetworkTrafficServerConnector
+2019-12-09 18:53:01,743 INFO  jetty-9.2.24.v20180105 [main][Server]org.eclipse.jetty.server.Server
+2019-12-09 18:53:01,760 INFO  Started o.e.j.s.ServletContextHandler@67ec8477{/__admin,null,AVAILABLE} [main][ContextHandler]org.eclipse.jetty.server.handler.ContextHandler
+2019-12-09 18:53:01,761 INFO  Started o.e.j.s.ServletContextHandler@5b3f3ba0{/,null,AVAILABLE} [main][ContextHandler]org.eclipse.jetty.server.handler.ContextHandler
+2019-12-09 18:53:01,834 INFO  Started NetworkTrafficServerConnector@39aa45a1{HTTP/1.1}{172.30.168.58:10409} [main][NetworkTrafficServerConnector]org.eclipse.jetty.server.NetworkTrafficServerConnector
+2019-12-09 18:53:01,835 INFO  Started @4578ms [main][Server]org.eclipse.jetty.server.Server
+2019-12-09 18:53:01,836 INFO  Guardian control mock started on (172.30.168.58: 10409) [main][GuardianControlMockBootstrapper]ru.sbt.risk.ac.guardian.control.mock.GuardianControlMockBootstrapper

@@ -40,13 +40,13 @@ public class LogMessageWaiter {
         if (!log.exists()) return;
 
         StringBuilder logContent = new StringBuilder();
-        int maxInMemoryLogContentLength = logMarkers.stream().mapToInt(String::length).max().orElse(1) * 5;
+        int maxInMemoryLogContentLength = logMarkers.stream().mapToInt(String::length).max().orElse(1) * 3;
 
         try (BufferedReader reader = new BufferedReader(new FileReader(log))) {
             while (true) {
                 String line = reader.readLine();
                 if (line != null) {
-                    doAppend(logContent, line, maxInMemoryLogContentLength);
+                    logContent.append(line);
 
                     Optional<String> marker = logMarkers.stream()
                             .filter(s -> logContent.indexOf(s) >= 0)
@@ -57,6 +57,7 @@ public class LogMessageWaiter {
                         return;
                     }
 
+                    trimLog(logContent, maxInMemoryLogContentLength);
                     continue;
                 }
 
@@ -69,9 +70,7 @@ public class LogMessageWaiter {
         }
     }
 
-    void doAppend(StringBuilder logContent, String line, int maxLength) {
-        logContent.append(line);
-
+    private void trimLog(StringBuilder logContent, int maxLength) {
         if (logContent.length() > maxLength) {
             logContent.delete(0, logContent.length() - maxLength);
         }
