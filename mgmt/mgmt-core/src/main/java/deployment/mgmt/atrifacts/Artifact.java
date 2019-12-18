@@ -131,11 +131,16 @@ public class Artifact {
 
     private String detectTypeOrElse(ArtifactType artifactType) {
         if (classifier == null) return artifactType.extension();
-        return (classifier.contains(":") ? "-" : ".") + classifierUrl();
+
+        return (classifier.contains(":") ? "-" : ".") + classifierUrl(artifactType);
     }
 
-    private String classifierUrl() {
+    private String classifierUrl(ArtifactType artifactType) {
         List<String> list = asList(classifier.split(":"));
+        if (list.size() == 1 && !ArtifactType.isType(list.get(0))) {
+            return list.get(0) + artifactType.extension();
+        }
+
         reverse(list);
         return join(".", list);
     }

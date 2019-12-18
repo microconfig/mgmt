@@ -61,6 +61,9 @@ public class ArtifactTest {
         Artifact jdkArtifact = fromMavenString("com.oracle:jdk-linux:gz:10.0.2");
         assertEquals("gz", jdkArtifact.getClassifier());
         assertEquals("com/oracle/jdk-linux/10.0.2/jdk-linux-10.0.2.gz", jdkArtifact.toUrlPath(JAR));
+
+        Artifact netty = Artifact.fromMavenString("io.netty:netty-transport-native-epoll:linux-x86_64:4.1.43.Final");
+        assertEquals("io/netty/netty-transport-native-epoll/4.1.43.Final/netty-transport-native-epoll-4.1.43.Final.linux-x86_64.jar", netty.toUrlPath(JAR));
     }
 
     @Test
