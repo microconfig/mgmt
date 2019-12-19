@@ -137,7 +137,7 @@ public class Artifact {
 
     private String classifierUrl(ArtifactType artifactType) {
         List<String> list = asList(classifier.split(":"));
-        if (list.size() == 1 && !ArtifactType.isType(list.get(0))) {
+        if (list.size() == 1 && artifactType != null && !ArtifactType.isType(list.get(0))) {
             return "-" + list.get(0) + artifactType.extension();
         }
 

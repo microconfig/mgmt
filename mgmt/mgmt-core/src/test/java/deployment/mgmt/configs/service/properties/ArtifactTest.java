@@ -20,6 +20,9 @@ public class ArtifactTest {
         assertEquals("gz:tar:x64_bin", artifact.getClassifier());
         assertEquals("11.0.1", artifact.getVersion());
         assertEquals("com/oracle/openjdk-linux/11.0.1/openjdk-linux-11.0.1-x64_bin.tar.gz", artifact.toUrlPath(JAR));
+
+        Artifact configs = Artifact.fromMavenString("configs:configs:zip:4.5");
+        assertEquals("configs/configs/4.5/configs-4.5.zip", configs.toUrlPath(null));
     }
 
     @Test
