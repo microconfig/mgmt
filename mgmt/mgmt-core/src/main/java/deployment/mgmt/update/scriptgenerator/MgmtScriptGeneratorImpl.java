@@ -62,7 +62,7 @@ public class MgmtScriptGeneratorImpl implements MgmtScriptGenerator {
         };
 
         Supplier<String> deletePostScript = () ->
-                "post_mgmt_script='" + withHomePath(deployFileStructure.deploy().getPostMgmtScriptFile()) + "'\n"
+                "post_mgmt_script=" + withHomePath(deployFileStructure.deploy().getPostMgmtScriptFile()) + "\n"
                         + "rm -f $post_mgmt_script\n\n";
 
         Supplier<String> mgmtRun = () ->
