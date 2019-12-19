@@ -1,14 +1,14 @@
 package deployment.mgmt.update.scriptgenerator;
 
 import deployment.mgmt.configs.filestructure.DeployFileStructure;
+import io.microconfig.utils.OsUtil;
 import lombok.RequiredArgsConstructor;
 
 import java.io.File;
 import java.util.function.Supplier;
 
 import static io.microconfig.utils.FilePermissionUtils.writeExecutable;
-import static io.microconfig.utils.FileUtils.userHome;
-import static io.microconfig.utils.FileUtils.write;
+import static io.microconfig.utils.FileUtils.*;
 import static io.microconfig.utils.IoUtils.readFully;
 import static io.microconfig.utils.Logger.info;
 import static io.microconfig.utils.OsUtil.isWindows;
@@ -53,7 +53,7 @@ public class MgmtScriptGeneratorImpl implements MgmtScriptGenerator {
     private String mgmtScript() {
         Supplier<String> healthcheck = () ->
         {
-            String hcFile = deployFileStructure.configs().getMgmtScriptsDir() + "/commands/healthcheck.sh";
+            String hcFile = withHomePath(deployFileStructure.configs().getMgmtScriptsDir()) + "/commands/healthcheck.sh";
             return "if [ \"$1\" = \"healthcheck\" ]; then\n"
                     + "  chmod +x " + hcFile + "\n"
                     + "  " +hcFile + " ${@:2}\n"
@@ -62,13 +62,13 @@ public class MgmtScriptGeneratorImpl implements MgmtScriptGenerator {
         };
 
         Supplier<String> deletePostScript = () ->
-                "post_mgmt_script='" + deployFileStructure.deploy().getPostMgmtScriptFile() + "'\n"
+                "post_mgmt_script='" + withHomePath(deployFileStructure.deploy().getPostMgmtScriptFile()) + "'\n"
                         + "rm -f $post_mgmt_script\n\n";
 
         Supplier<String> mgmtRun = () ->
                 currentJavaPath()
                         + " -Djava.security.egd=file:/dev/./urandom -XX:TieredStopAtLevel=1 -Xverify:none"
-                        + " -jar " + deployFileStructure.deploy().getMgmtJarFile().getAbsolutePath()
+                        + " -jar " + withHomePath(deployFileStructure.deploy().getMgmtJarFile())
                         + " $@\n" +
                         "status=$?\n\n";
 
@@ -87,5 +87,10 @@ public class MgmtScriptGeneratorImpl implements MgmtScriptGenerator {
 
     private File mgmtFile() {
         return deployFileStructure.deploy().getMgmtScriptFile();
+    }
+
+    private static String withHomePath(File file) {
+        String path = file.toString();
+        return isWindows() ? path : path.replace(userHomeString(), "~");
     }
 }

@@ -11,7 +11,7 @@ public interface DeployDirs {
 
     File getMgmtScriptFile();
 
-    File getMgmtJarFile();
+    File    getMgmtJarFile();
 
     File getGroupDescriptionFile();
 
