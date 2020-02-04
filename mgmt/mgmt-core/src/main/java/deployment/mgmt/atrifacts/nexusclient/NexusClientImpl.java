@@ -34,11 +34,16 @@ import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 import static java.util.Collections.emptyList;
 import static lombok.AccessLevel.PRIVATE;
 import static mgmt.utils.ByteReaderUtils.readAllBytes;
+import static mgmt.utils.SSLUtilities.trustAll;
 
 @RequiredArgsConstructor
 public class NexusClientImpl implements NexusClient {
     private static final Pattern versionPattern = Pattern.compile("<version>(.+)</version>");
     private static final String AUTHORIZATION_HEADER = "Authorization";
+
+    static {
+        trustAll();
+    }
 
     private final RepositoryPriorityService repositoryPriorityService;
     private final DeploySettings deploySettings;
@@ -117,7 +122,7 @@ public class NexusClientImpl implements NexusClient {
 
         @Override
         public void to(File saveTo) {
-            try (InputStream inputStream = urlStream(artifact, artifactType, repositories)) {
+            try (InputStream inputStream = openStream(artifact, artifactType, repositories)) {
                 createDir(saveTo.getParentFile());
                 copy(inputStream, saveTo.toPath(), REPLACE_EXISTING);
                 listener.downloaded(artifact, artifactType, saveTo);
@@ -142,7 +147,7 @@ public class NexusClientImpl implements NexusClient {
             return new String(asBytes());
         }
 
-        private InputStream urlStream(Artifact artifact, ArtifactType artifactType, List<NexusRepository> repositories) {
+        private InputStream openStream(Artifact artifact, ArtifactType artifactType, List<NexusRepository> repositories) {
             if (repositories.isEmpty()) {
                 throw new IllegalStateException("Please specify nexus repositories");
             }
