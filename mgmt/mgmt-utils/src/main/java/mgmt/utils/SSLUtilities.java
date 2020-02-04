@@ -10,13 +10,13 @@ public final class SSLUtilities {
     /**
      * Hostname verifier for the Sun's deprecated API.
      *
-     * @deprecated see {@link #_hostnameVerifier}.
+     * deprecated see {@link #_hostnameVerifier}.
      */
     private static HostnameVerifier __hostnameVerifier;
     /**
      * Thrust managers for the Sun's deprecated API.
      *
-     * @deprecated see {@link #_trustManagers}.
+     * deprecated see {@link #_trustManagers}.
      */
     private static TrustManager[] __trustManagers;
     /**
@@ -34,7 +34,7 @@ public final class SSLUtilities {
      * trust all hostnames. This method uses the old deprecated API from the
      * com.sun.ssl package.
      *
-     * @deprecated see {@link #_trustAllHostnames()}.
+     * deprecated see {@link #_trustAllHostnames()}.
      */
     private static void __trustAllHostnames() {
         // Create a trust manager that does not validate certificate chains
@@ -51,7 +51,7 @@ public final class SSLUtilities {
      * trust all certificates, even the self-signed ones. This method uses the
      * old deprecated API from the com.sun.ssl package.
      *
-     * @deprecated see {@link #_trustAllHttpsCertificates()}.
+     * deprecated see {@link #_trustAllHttpsCertificates()}.
      */
     private static void __trustAllHttpsCertificates() {
         SSLContext context;
@@ -158,7 +158,7 @@ public final class SSLUtilities {
      * ssl package.
      *
      * @author Francis Labrie
-     * @deprecated see {@link SSLUtilities.FakeHostnameVerifier}.
+     * deprecated see {@link SSLUtilities.FakeHostnameVerifier}.
      */
     public static class _FakeHostnameVerifier implements HostnameVerifier {
         @Override
@@ -175,7 +175,7 @@ public final class SSLUtilities {
      * package.
      *
      * @author Francis Labrie
-     * @deprecated see {@link SSLUtilities.FakeX509TrustManager}.
+     * deprecated see {@link SSLUtilities.FakeX509TrustManager}.
      */
     public static class _FakeX509TrustManager implements X509TrustManager {
         private static final X509Certificate[] _AcceptedIssuers = new X509Certificate[]{};
