@@ -1,6 +1,6 @@
 ext {
     mavenResolverV = '1.3.1'
-    mcVersion = '3.9.13'
+    mcVersion = '3.12.0'
 
     lib = [
             maven_resolver_api: "org.apache.maven.resolver:maven-resolver-api:${mavenResolverV}",
@@ -9,11 +9,11 @@ ext {
                                  "org.apache.maven.resolver:maven-resolver-transport-http:${mavenResolverV}",
                                  'org.apache.maven:maven-resolver-provider:3.6.0'],
             jasypt            : 'org.jasypt:jasypt:1.9.2',
-            snakeyaml         : 'org.yaml:snakeyaml:1.23',
+            snakeyaml         : 'org.yaml:snakeyaml:1.26',
             commons_compress  : 'org.apache.commons:commons-compress:1.18',
             jsch              : 'com.jcraft:jsch:0.1.54',
             guava             : 'com.google.guava:guava:20.0',
-            lombok            : 'org.projectlombok:lombok:1.18.8',
+            lombok            : 'org.projectlombok:lombok:1.18.12',
             microconfig_utils : "io.microconfig:utils:${mcVersion}",
             microconfig_core  : "io.microconfig:microconfig-core:${mcVersion}:all"
     ].withDefault({ key -> throw new IllegalArgumentException("Unknown library '$key'") })

@@ -1,7 +1,7 @@
 package deployment.mgmt.configs.encryption;
 
 import deployment.mgmt.configs.filestructure.DeployFileStructure;
-import io.microconfig.configs.io.ioservice.ConfigIoService;
+import io.microconfig.core.properties.io.ioservice.ConfigIoService;
 import lombok.RequiredArgsConstructor;
 
 import java.io.File;

@@ -4,7 +4,7 @@ import deployment.mgmt.configs.componentgroup.ComponentGroupService;
 import deployment.mgmt.process.status.ServiceStatus;
 import deployment.mgmt.process.status.StatusCommand;
 import deployment.mgmt.ssh.SshCommand;
-import io.microconfig.environments.ComponentGroup;
+import io.microconfig.core.environments.ComponentGroup;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Comparator;

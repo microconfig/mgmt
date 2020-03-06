@@ -1,6 +1,7 @@
 package deployment.mgmt.microconfig.secrets;
 
-import io.microconfig.configs.Property;
+
+import io.microconfig.core.properties.Property;
 
 import java.util.Map;
 import java.util.Set;

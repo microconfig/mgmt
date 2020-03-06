@@ -6,14 +6,12 @@ import deployment.mgmt.configs.filestructure.ProcessDirs;
 import deployment.mgmt.configs.service.properties.ProcessProperties;
 import deployment.mgmt.configs.service.properties.PropertyService;
 import deployment.mgmt.process.runner.ScriptRunner;
-import deployment.mgmt.utils.ZipUtils;
 import lombok.RequiredArgsConstructor;
 
 import java.io.File;
 import java.util.List;
 import java.util.function.Consumer;
 
-import static deployment.mgmt.utils.ZipUtils.unzip;
 import static io.microconfig.utils.FileUtils.copy;
 import static io.microconfig.utils.Logger.error;
 import static io.microconfig.utils.SystemPropertiesUtils.hasSystemFlag;
@@ -68,6 +66,7 @@ public class NewServicePreparerImpl implements NewServicePreparer {
     private void unzipArtifactIfNeeded(String service, ProcessProperties processProperties) {
         extractService.unzipArtifactIfNeeded(service, processProperties);
     }
+
     private void runPrepareDirScript(String service, ProcessProperties processProperties) {
         if (hasSystemFlag("skipScripts")) return;
         scriptRunner.runScript(processProperties.getPrepareDirScriptName(), service);

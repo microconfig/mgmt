@@ -30,7 +30,7 @@ public class ServiceDirsImpl implements ServiceDirs {
     @Override
     public File getServicePropertiesDiffFile(String service) {
         File old = propertiesOrYaml(service, "diff-service");
-        return old.exists() ? old : propertiesOrYaml(service,"diff-application");
+        return old.exists() ? old : propertiesOrYaml(service, "diff-application");
     }
 
     @Override

@@ -2,9 +2,9 @@ package deployment.mgmt.microconfig.factory;
 
 import io.microconfig.commands.Command;
 import io.microconfig.commands.CommandContext;
-import io.microconfig.configs.io.components.ComponentTree;
-import io.microconfig.environments.Component;
-import io.microconfig.environments.EnvironmentProvider;
+import io.microconfig.core.environments.Component;
+import io.microconfig.core.environments.EnvironmentProvider;
+import io.microconfig.core.properties.io.tree.ComponentTree;
 import lombok.RequiredArgsConstructor;
 
 import java.io.File;

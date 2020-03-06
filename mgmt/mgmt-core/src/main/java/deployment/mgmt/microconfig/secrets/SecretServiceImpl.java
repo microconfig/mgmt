@@ -1,7 +1,7 @@
 package deployment.mgmt.microconfig.secrets;
 
-import io.microconfig.configs.Property;
-import io.microconfig.configs.io.ioservice.ConfigIoService;
+import io.microconfig.core.properties.Property;
+import io.microconfig.core.properties.io.ioservice.ConfigIoService;
 import lombok.RequiredArgsConstructor;
 
 import java.io.File;
@@ -9,7 +9,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
-import static io.microconfig.configs.Property.withoutTempValues;
+import static io.microconfig.core.properties.Property.withoutTempValues;
 import static java.util.Collections.emptySet;
 
 @RequiredArgsConstructor

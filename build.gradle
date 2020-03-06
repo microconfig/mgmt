@@ -1,18 +1,17 @@
 apply from: 'lib.gradle'
-version = "${major}.${minor}.${patch}${versionPostfix}"
 
 buildscript {
     repositories {
         mavenLocal()
-        if (org.gradle.internal.os.OperatingSystem.current().isMacOsX()) {
-            maven { url "http://172.30.162.1/nexus/content/groups/public" }
-        }
+//        if (org.gradle.internal.os.OperatingSystem.current().isMacOsX()) {
+//            maven { url "http://172.30.162.1/nexus/content/groups/public" }
+//        }
         mavenCentral()        
         jcenter()
     }
 
     dependencies {
-        classpath "com.github.jengelman.gradle.plugins:shadow:4.0.4"
+        classpath "com.github.jengelman.gradle.plugins:shadow:5.2.0"
     }
 }
 
@@ -25,14 +24,14 @@ allprojects {
     group = 'jdeployment'
     version = rootProject.version
 
-    sourceCompatibility = 10
-    targetCompatibility = 10
+    sourceCompatibility = 11
+    targetCompatibility = 11
 
     repositories {
         mavenLocal()
-        if (org.gradle.internal.os.OperatingSystem.current().isMacOsX()) {
-            maven { url "http://172.30.162.1/nexus/content/groups/public" }
-        }
+//        if (org.gradle.internal.os.OperatingSystem.current().isMacOsX()) {
+//            maven { url "http://172.30.162.1/nexus/content/groups/public" }
+//        }
         mavenCentral()
     }
 
@@ -45,7 +44,7 @@ allprojects {
 //    }
 
     dependencies {
-        implementation platform("org.springframework.boot:spring-boot-dependencies:2.1.8.RELEASE")
+        implementation platform("org.springframework.boot:spring-boot-dependencies:2.2.5.RELEASE")
 
         compileOnly lib.lombok
         annotationProcessor lib.lombok

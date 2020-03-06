@@ -1,9 +1,9 @@
 package deployment.mgmt.microconfig.secrets;
 
 import io.microconfig.commands.buildconfig.BuildConfigPostProcessor;
-import io.microconfig.configs.ConfigProvider;
-import io.microconfig.configs.Property;
-import io.microconfig.configs.resolver.EnvComponent;
+import io.microconfig.core.properties.ConfigProvider;
+import io.microconfig.core.properties.Property;
+import io.microconfig.core.properties.resolver.EnvComponent;
 import lombok.RequiredArgsConstructor;
 
 import java.io.File;

@@ -10,8 +10,8 @@ import java.util.zip.ZipEntry;
 
 import static deployment.mgmt.atrifacts.Artifact.SNAPSHOT;
 import static deployment.mgmt.atrifacts.ArtifactType.JAR;
-import static deployment.mgmt.atrifacts.strategies.classpathfile.JarClasspathReader.CLASSPATH_FILE;
 import static deployment.mgmt.atrifacts.strategies.classpathfile.JarClasspathReader.ARTIFACTS_FILE;
+import static deployment.mgmt.atrifacts.strategies.classpathfile.JarClasspathReader.CLASSPATH_FILE;
 import static deployment.mgmt.utils.ZipUtils.containsInnerFile;
 import static deployment.mgmt.utils.ZipUtils.forEachInnerFiles;
 import static io.microconfig.utils.FileUtils.write;

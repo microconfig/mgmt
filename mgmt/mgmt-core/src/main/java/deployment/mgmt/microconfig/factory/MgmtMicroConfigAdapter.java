@@ -1,12 +1,12 @@
 package deployment.mgmt.microconfig.factory;
 
+import deployment.mgmt.microconfig.secrets.SecretServiceImpl;
+import deployment.mgmt.microconfig.secrets.UpdateSecretsPostProcessor;
+import io.microconfig.BuildConfigMain;
 import io.microconfig.commands.Command;
 import io.microconfig.commands.buildconfig.BuildConfigCommand;
 import io.microconfig.commands.buildconfig.BuildConfigPostProcessor;
-import deployment.mgmt.microconfig.secrets.SecretServiceImpl;
-import deployment.mgmt.microconfig.secrets.UpdateSecretsPostProcessor;
-import io.microconfig.configs.io.ioservice.ConfigIoService;
-import io.microconfig.entry.BuildConfigMain;
+import io.microconfig.core.properties.io.ioservice.ConfigIoService;
 import io.microconfig.factory.MicroconfigFactory;
 
 import java.io.File;
@@ -36,7 +36,7 @@ public class MgmtMicroConfigAdapter {
                 factory.newBuildCommand(DEPLOY.getType()),
                 factory.newBuildCommand(ENV.getType()),
                 factory.newBuildCommand(SECRET.getType(), updateSecretsPostProcessor(factory.getConfigIoService())),
-                factory.newBuildCommand(LOG4j.getType()),
+                factory.newBuildCommand(LOG4J.getType()),
                 factory.newBuildCommand(LOG4J2.getType()),
                 factory.newBuildCommand(byName("sap")),
                 new GenerateComponentListCommand(destinationComponentDir, factory.getEnvironmentProvider()),

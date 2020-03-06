@@ -8,7 +8,7 @@ public enum ArtifactType {
     GZ;
 
     public static boolean isType(String type) {
-        return Stream.of(values()).anyMatch(at-> at.name().equalsIgnoreCase(type));
+        return Stream.of(values()).anyMatch(at -> at.name().equalsIgnoreCase(type));
     }
 
     public String extension() {

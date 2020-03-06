@@ -4,7 +4,7 @@ import deployment.mgmt.atrifacts.Artifact;
 import deployment.mgmt.configs.componentgroup.ComponentGroupService;
 import deployment.mgmt.configs.filestructure.DeployFileStructure;
 import deployment.mgmt.configs.service.properties.NexusRepository;
-import io.microconfig.configs.io.ioservice.ConfigIoService;
+import io.microconfig.core.properties.io.ioservice.ConfigIoService;
 import lombok.RequiredArgsConstructor;
 
 import java.io.File;

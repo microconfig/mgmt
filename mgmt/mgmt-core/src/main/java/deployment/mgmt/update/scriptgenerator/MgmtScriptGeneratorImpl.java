@@ -1,7 +1,6 @@
 package deployment.mgmt.update.scriptgenerator;
 
 import deployment.mgmt.configs.filestructure.DeployFileStructure;
-import io.microconfig.utils.OsUtil;
 import lombok.RequiredArgsConstructor;
 
 import java.io.File;
@@ -56,7 +55,7 @@ public class MgmtScriptGeneratorImpl implements MgmtScriptGenerator {
             String hcFile = withHomePath(deployFileStructure.configs().getMgmtScriptsDir()) + "/commands/healthcheck.sh";
             return "if [ \"$1\" = \"healthcheck\" ]; then\n"
                     + "  chmod +x " + hcFile + "\n"
-                    + "  " +hcFile + " ${@:2}\n"
+                    + "  " + hcFile + " ${@:2}\n"
                     + "  exit $?\n"
                     + "fi\n\n";
         };
@@ -78,7 +77,7 @@ public class MgmtScriptGeneratorImpl implements MgmtScriptGenerator {
                         + "  rm -rf $post_mgmt_script\n"
                         + "  $script\n"
                         + "else\n"
-                        +"  exit ${status}\n"
+                        + "  exit ${status}\n"
                         + "fi";
 
         return isWindows() ? mgmtRun.get()
