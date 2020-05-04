@@ -1,7 +1,7 @@
 package deployment.mgmt.configs.encryption;
 
 import deployment.mgmt.configs.filestructure.DeployFileStructure;
-import io.microconfig.core.properties.io.ioservice.ConfigIoService;
+import io.microconfig.core.properties.io.ConfigIo;
 import lombok.RequiredArgsConstructor;
 
 import java.io.File;
@@ -17,7 +17,7 @@ import static java.lang.System.currentTimeMillis;
 public class EncryptPropertiesCommandImpl implements EncryptPropertiesCommand {
     private static final String DEFAULT_SECRET_PROPERTY_MATCHER = "^.*password.*$";
     private final DeployFileStructure deployFileStructure;
-    private final ConfigIoService configIoService;
+    private final ConfigIo configIo;
 
     @Override
     public void encryptSecretProperties() {
@@ -41,7 +41,7 @@ public class EncryptPropertiesCommandImpl implements EncryptPropertiesCommand {
     }
 
     private void encryptProperties(File propertiesFile, File passwordFile) {
-        Map<String, String> properties = configIoService.read(propertiesFile).escapeResolvedPropertiesAsMap();
+        Map<String, String> properties = configIo.readFrom(propertiesFile).propertiesAsMap(); //todo
         String result = new PropertiesEncryptor(passwordFile).encryptProperties(properties, DEFAULT_SECRET_PROPERTY_MATCHER);
 
         write(propertiesFile, result);

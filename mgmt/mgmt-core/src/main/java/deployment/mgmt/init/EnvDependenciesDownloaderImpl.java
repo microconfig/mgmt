@@ -6,9 +6,7 @@ import deployment.mgmt.configs.componentgroup.ComponentGroupService;
 import deployment.mgmt.configs.filestructure.DeployFileStructure;
 import deployment.mgmt.configs.service.properties.NexusRepository;
 import deployment.mgmt.update.updater.MgmtProperties;
-import io.microconfig.core.properties.ConfigProvider;
-import io.microconfig.factory.ConfigType;
-import io.microconfig.factory.configtypes.ConfigTypeImpl;
+import io.microconfig.core.Microconfig;
 import lombok.RequiredArgsConstructor;
 
 import java.io.File;
@@ -18,13 +16,13 @@ import java.util.Map;
 
 import static deployment.mgmt.atrifacts.Artifact.fromMavenString;
 import static deployment.mgmt.utils.ZipUtils.unzip;
-import static io.microconfig.core.environments.Component.byType;
-import static io.microconfig.core.properties.Property.withoutTempValues;
+import static io.microconfig.core.configtypes.ConfigTypeFilters.configType;
+import static io.microconfig.core.configtypes.ConfigTypeImpl.byName;
 import static io.microconfig.utils.Logger.*;
-import static mgmt.utils.OsUtil.isWindows;
-import static mgmt.utils.TimeUtils.secAfter;
 import static java.lang.System.currentTimeMillis;
+import static mgmt.utils.OsUtil.isWindows;
 import static mgmt.utils.ProcessUtil.executeScript;
+import static mgmt.utils.TimeUtils.secAfter;
 
 @RequiredArgsConstructor
 public class EnvDependenciesDownloaderImpl implements EnvDependenciesDownloader {
@@ -37,13 +35,10 @@ public class EnvDependenciesDownloaderImpl implements EnvDependenciesDownloader 
     public void downloadDependencies(String env) {
         if (isWindows()) return;
 
-        String componentName = "dependencies";
-        ConfigType dependenciesType = ConfigTypeImpl.byName(componentName);
-        ConfigProvider configProvider = mgmtProperties.getConfigProvider(dependenciesType);
-        Map<String, String> dependencies = withoutTempValues(configProvider.getProperties(byType(componentName), componentGroup.getEnv()));
+        Map<String, String> dependencyNameToArtifact = getDependencies();
 
         List<NexusRepository> nexusRepositories = new ArrayList<>();
-        dependencies.forEach((name, artifactLine) -> {
+        dependencyNameToArtifact.forEach((name, artifactLine) -> {
             try {
                 File dependenciesDir = deployFileStructure.deploy().getDependenciesDir();
                 Artifact artifact = fromMavenString(artifactLine);
@@ -72,6 +67,17 @@ public class EnvDependenciesDownloaderImpl implements EnvDependenciesDownloader 
                 error("Dependency download error: " + name + "," + artifactLine, e);
             }
         });
+    }
+
+    private Map<String, String> getDependencies() {
+        String componentName = "dependencies";
+        Microconfig microconfig = mgmtProperties.microconfig();
+        return microconfig.inEnvironment(componentGroup.getEnv())
+                .getOrCreateComponentWithName(componentName)
+                .getPropertiesFor(configType(byName(componentName)))
+                .resolveBy(microconfig.resolver())
+                .withoutVars()
+                .getPropertiesAsKeyValue();
     }
 
     private void addEnvUserGroupPermission() {

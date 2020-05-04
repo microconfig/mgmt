@@ -3,7 +3,7 @@ package deployment.mgmt.configs.service.properties.impl;
 import deployment.mgmt.configs.filestructure.DeployFileStructure;
 import deployment.mgmt.configs.service.properties.ProcessProperties;
 import deployment.mgmt.configs.service.properties.PropertyService;
-import io.microconfig.core.properties.io.ioservice.ConfigIoService;
+import io.microconfig.core.properties.io.ConfigIo;
 import lombok.RequiredArgsConstructor;
 
 import java.io.File;
@@ -16,7 +16,7 @@ import static deployment.mgmt.utils.EnvResolver.resolveEnvVariable;
 @RequiredArgsConstructor
 public class PropertyServiceImpl implements PropertyService {
     private final DeployFileStructure deployFileStructure;
-    private final ConfigIoService configIo;
+    private final ConfigIo configIo;
 
     @Override
     public boolean serviceExists(String service) {
@@ -25,7 +25,7 @@ public class PropertyServiceImpl implements PropertyService {
 
     @Override
     public Map<String, String> getServiceProperties(String service) {
-        return configIo.read(deployFileStructure.service().getServicePropertiesFile(service)).propertiesAsMap();
+        return configIo.readFrom(deployFileStructure.service().getServicePropertiesFile(service)).propertiesAsMap();
     }
 
     @Override
@@ -36,7 +36,7 @@ public class PropertyServiceImpl implements PropertyService {
     @Override
     public Map<String, String> getEnvVariables(String service) {
         File file = deployFileStructure.process().getEnvVariablesFile(service);
-        Map<String, String> properties = configIo.read(file).propertiesAsMap();
+        Map<String, String> properties = configIo.readFrom(file).propertiesAsMap();
         return resolveEnvVariable(properties);
     }
 }

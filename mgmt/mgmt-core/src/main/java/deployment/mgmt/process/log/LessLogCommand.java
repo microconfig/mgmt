@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 
 import java.io.File;
 
-import static io.microconfig.utils.FilePermissionUtils.writeExecutable;
+import static mgmt.utils.FilePermissionUtils.writeExecutable;
 import static io.microconfig.utils.Logger.announce;
 import static io.microconfig.utils.Logger.warn;
 import static io.microconfig.utils.StringUtils.isEmpty;

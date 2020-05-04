@@ -1,9 +1,9 @@
 package deployment.mgmt.configs.service.properties.impl;
 
 import deployment.mgmt.configs.service.properties.*;
-import io.microconfig.core.properties.io.ioservice.ConfigIoService;
-import io.microconfig.utils.SystemPropertiesUtils;
+import io.microconfig.core.properties.io.ConfigIo;
 import lombok.RequiredArgsConstructor;
+import mgmt.utils.SystemPropertiesUtils;
 
 import java.io.File;
 import java.util.LinkedHashSet;
@@ -13,20 +13,20 @@ import java.util.stream.Stream;
 
 import static deployment.mgmt.configs.service.properties.impl.StandardServiceGroup.*;
 import static io.microconfig.utils.StringUtils.isEmpty;
-import static mgmt.utils.StringUtils.replaceMultipleSpaces;
 import static java.util.Collections.*;
 import static java.util.Optional.ofNullable;
 import static java.util.Set.of;
+import static mgmt.utils.StringUtils.replaceMultipleSpaces;
 
 //"mgmt.prestop.script", "mgmt.poststop.script", "mgmt.poststart.script" todo2
 @RequiredArgsConstructor
 public class ProcessPropertiesImpl implements ProcessProperties {
     private final Map<String, String> keyToValue;
     private final File file;
-    private final ConfigIoService configIo;
+    private final ConfigIo configIo;
 
-    public static ProcessProperties fromFile(File file, ConfigIoService configIo) {
-        Map<String, String> keyToValue = configIo.read(file).propertiesAsMap();
+    public static ProcessProperties fromFile(File file, ConfigIo configIo) {
+        Map<String, String> keyToValue = configIo.readFrom(file).propertiesAsMap();
         return new ProcessPropertiesImpl(keyToValue, file, configIo);
     }
 

@@ -4,7 +4,7 @@ import deployment.mgmt.atrifacts.Artifact;
 import deployment.mgmt.configs.componentgroup.ComponentGroupService;
 import deployment.mgmt.configs.filestructure.DeployFileStructure;
 import deployment.mgmt.configs.service.properties.NexusRepository;
-import io.microconfig.core.properties.io.ioservice.ConfigIoService;
+import io.microconfig.core.properties.io.ConfigIo;
 import lombok.RequiredArgsConstructor;
 
 import java.io.File;
@@ -13,6 +13,7 @@ import static deployment.mgmt.atrifacts.Artifact.fromMavenString;
 import static deployment.mgmt.configs.service.properties.NexusRepository.RepositoryType.RELEASE;
 import static deployment.mgmt.init.InitParams.*;
 import static io.microconfig.utils.FileUtils.*;
+import static mgmt.utils.FileUtils.createFile;
 import static mgmt.utils.IoUtils.firstLine;
 import static io.microconfig.utils.IoUtils.readFully;
 import static io.microconfig.utils.Logger.info;
@@ -26,7 +27,7 @@ public class DeploySettingsImpl implements DeploySettings {
     private final DeployFileStructure deployFileStructure;
     private final ComponentGroupService componentGroupService;
     private final EncryptionService simpleEncryptionService;
-    private final ConfigIoService configIo;
+    private final ConfigIo configIo;
 
     private volatile Credentials nexusCredentialCache;
 
@@ -35,7 +36,7 @@ public class DeploySettingsImpl implements DeploySettings {
         if (!deployFileStructure.deploy().getGroupDescriptionFile().exists()) return null;
 
         File mgmtVersionFile = deployFileStructure.configs().getMgmtArtifactFile(componentGroupService.getEnv());
-        String version = configIo.read(mgmtVersionFile).propertiesAsMap().get(MGMT_VERSION_PROPERTY);
+        String version = configIo.readFrom(mgmtVersionFile).propertiesAsMap().get(MGMT_VERSION_PROPERTY);
         return version == null ? null : fromMavenString(version);
     }
 

@@ -61,9 +61,10 @@ public class AutocompleteImpl implements Autocomplete {
 
     private String componentGroups() {
         try {
-            return mgmtProperties.getEnvironmentProvider()
-                    .getByName(componentGroupService.getEnv())
-                    .getComponentGroups().stream()
+            return mgmtProperties.microconfig()
+                    .inEnvironment(componentGroupService.getEnv())
+                    .getGroups()
+                    .stream()
                     .map(ComponentGroup::getName)
                     .collect(joining(" "));
         } catch (RuntimeException e) {

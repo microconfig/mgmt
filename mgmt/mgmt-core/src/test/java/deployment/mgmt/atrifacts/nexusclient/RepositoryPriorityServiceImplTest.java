@@ -10,6 +10,7 @@ import java.util.List;
 
 import static deployment.mgmt.atrifacts.Artifact.fromMavenString;
 import static deployment.mgmt.configs.service.properties.NexusRepository.RepositoryType.*;
+import static io.microconfig.utils.StreamUtils.forEach;
 import static java.util.Arrays.asList;
 import static java.util.stream.Collectors.toUnmodifiableList;
 import static java.util.stream.Stream.of;
@@ -31,7 +32,7 @@ public class RepositoryPriorityServiceImplTest {
     private void test(Artifact artifact, RepositoryType... first) {
         List<NexusRepository> result = priorityService.withPriority(repositories, artifact);
         assertEquals(repositories.size(), result.size());
-        assertEquals(asList(first), StreamUtils.map(result.subList(0, first.length), NexusRepository::getRepositoryType));
+        assertEquals(asList(first), forEach(result.subList(0, first.length), NexusRepository::getRepositoryType));
     }
 
     private NexusRepository repository(RepositoryType repositoryType) {

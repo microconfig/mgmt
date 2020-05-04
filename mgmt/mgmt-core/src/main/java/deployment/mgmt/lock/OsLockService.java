@@ -12,12 +12,12 @@ import java.nio.channels.FileLock;
 import static io.microconfig.utils.ConsoleColor.yellow;
 import static mgmt.utils.IoUtils.firstLineOrEmpty;
 import static io.microconfig.utils.Logger.*;
+import static mgmt.utils.LoggerUtils.*;
 import static mgmt.utils.TimeUtils.secAfter;
 import static java.lang.ProcessHandle.current;
 import static java.lang.String.valueOf;
 import static java.lang.System.currentTimeMillis;
 import static java.nio.ByteBuffer.wrap;
-import static mgmt.utils.LoggerUtils.oneLineInfo;
 import static mgmt.utils.ThreadUtils.sleepSec;
 
 @RequiredArgsConstructor

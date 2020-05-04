@@ -5,19 +5,16 @@ import deployment.mgmt.configs.componentgroup.GroupDescription;
 import deployment.mgmt.configs.filestructure.DeployFileStructure;
 import deployment.mgmt.configs.service.properties.NexusRepository;
 import deployment.mgmt.configs.service.properties.impl.ProcessPropertiesImpl;
-import io.microconfig.core.environments.EnvironmentProvider;
-import io.microconfig.core.properties.ConfigProvider;
-import io.microconfig.core.properties.Property;
-import io.microconfig.factory.ConfigType;
-import io.microconfig.factory.MicroconfigFactory;
+import io.microconfig.core.Microconfig;
+import io.microconfig.core.environments.Component;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 import java.util.Map;
 
-import static io.microconfig.core.environments.Component.byType;
-import static io.microconfig.core.properties.Property.withoutTempValues;
-import static io.microconfig.factory.configtypes.StandardConfigTypes.PROCESS;
+import static io.microconfig.core.Microconfig.searchConfigsIn;
+import static io.microconfig.core.configtypes.ConfigTypeFilters.configType;
+import static io.microconfig.core.configtypes.StandardConfigType.PROCESS;
 import static io.microconfig.utils.Logger.info;
 
 @RequiredArgsConstructor
@@ -25,50 +22,40 @@ public class MgmtPropertiesImpl implements MgmtProperties {
     private final DeployFileStructure deployFileStructure;
     private final ComponentGroupService componentGroupService;
 
-    @Override //todo migrate  for DeploySettings::getMgmtNexusRepository
+    @Override
     public List<NexusRepository> resolveNexusRepositories() {
-        MicroconfigFactory microconfigFactory = initBuildCommands();
-        ConfigProvider configProvider = microconfigFactory.newConfigProvider(PROCESS.getType());
-        EnvironmentProvider environmentProvider = microconfigFactory.getEnvironmentProvider();
-
-        String serviceName = anyServiceFromCurrentGroup(environmentProvider);
-        return resolveNexusUrlProperty(serviceName, configProvider);
+        Microconfig microconfig = microconfig();
+        Component service = anyServiceFromCurrentGroup(microconfig);
+        return resolveNexusUrlProperty(service, microconfig);
     }
 
     @Override
-    public ConfigProvider getConfigProvider(ConfigType configType) {
-        return initBuildCommands().newConfigProvider(configType);
+    public Microconfig microconfig() {
+        return searchConfigsIn(deployFileStructure.configs().getMicroconfigSourcesRootDir())
+                .withDestinationDir(deployFileStructure.service().getComponentsDir());
+
     }
 
-    @Override
-    public EnvironmentProvider getEnvironmentProvider() {
-        return initBuildCommands().getEnvironmentProvider();
-    }
-
-    private MicroconfigFactory initBuildCommands() {
-        return MicroconfigFactory.init(
-                deployFileStructure.configs().getMicroconfigSourcesRootDir(),
-                deployFileStructure.service().getComponentsDir()
-        );
-    }
-
-    private List<NexusRepository> resolveNexusUrlProperty(String serviceName, ConfigProvider configProvider) {
+    private List<NexusRepository> resolveNexusUrlProperty(Component component, Microconfig microconfig) {
         info("Resolving nexus repositories");
-        Map<String, Property> properties = configProvider.getProperties(byType(serviceName), componentGroupService.getEnv());
+        Map<String, String> properties = component.getPropertiesFor(configType(PROCESS))
+                .resolveBy(microconfig.resolver())
+                .withoutVars()
+                .getPropertiesAsKeyValue();
         if (properties.isEmpty()) {
-            throw new IllegalArgumentException("Can't resolve process properties for " + serviceName);
+            throw new IllegalArgumentException("Can't resolve process properties for " + component);
         }
 
-        return ProcessPropertiesImpl.fromMap(withoutTempValues(properties)).getMavenSettings().getNexusRepositories();
+        return ProcessPropertiesImpl.fromMap(properties).getMavenSettings().getNexusRepositories();
     }
 
-    private String anyServiceFromCurrentGroup(EnvironmentProvider environmentProvider) {
+    private Component anyServiceFromCurrentGroup(Microconfig microconfig) {
         GroupDescription cg = componentGroupService.getDescription();
 
-        return environmentProvider.getByName(cg.getEnv())
-                .getGroupByName(cg.getGroup())
+        return microconfig.inEnvironment(cg.getEnv())
+                .getGroupWithName(cg.getGroup())
                 .getComponents()
-                .get(0)
-                .getType();
+                .asList()
+                .get(0);
     }
 }

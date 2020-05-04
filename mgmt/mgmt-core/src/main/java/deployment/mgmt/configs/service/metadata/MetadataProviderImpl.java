@@ -2,7 +2,7 @@ package deployment.mgmt.configs.service.metadata;
 
 import deployment.mgmt.configs.filestructure.DeployFileStructure;
 import io.microconfig.utils.FileUtils;
-import io.microconfig.utils.IoUtils;
+import mgmt.utils.IoUtils;
 import lombok.RequiredArgsConstructor;
 
 import java.io.File;

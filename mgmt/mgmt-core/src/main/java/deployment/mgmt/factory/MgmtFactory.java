@@ -68,21 +68,22 @@ import deployment.mgmt.update.updater.MgmtAutoUpdater;
 import deployment.mgmt.update.updater.MgmtAutoUpdaterImpl;
 import deployment.mgmt.update.updater.MgmtProperties;
 import deployment.mgmt.update.updater.MgmtPropertiesImpl;
-import io.microconfig.commands.buildconfig.features.templates.CopyTemplatesServiceImpl;
-import io.microconfig.core.properties.io.ioservice.ConfigIoService;
-import io.microconfig.core.properties.io.ioservice.properties.PropertiesConfigIoService;
-import io.microconfig.core.properties.io.ioservice.selector.ConfigFormatDetectorImpl;
-import io.microconfig.core.properties.io.ioservice.selector.ConfigIoServiceSelector;
-import io.microconfig.core.properties.io.ioservice.yaml.YamlConfigIoService;
-import io.microconfig.io.FsReader;
+import io.microconfig.core.properties.io.ConfigIo;
+import io.microconfig.core.properties.io.properties.PropertiesConfigIo;
+import io.microconfig.core.properties.io.selector.ConfigFormatDetectorImpl;
+import io.microconfig.core.properties.io.selector.ConfigIoSelector;
+import io.microconfig.core.properties.io.yaml.YamlConfigIo;
+import io.microconfig.core.properties.templates.MustacheTemplateProcessor;
+import io.microconfig.core.properties.templates.TemplatesService;
 import io.microconfig.io.DumpedFsReader;
+import io.microconfig.io.FsReader;
 import lombok.Getter;
 
 import java.util.List;
 
-import static io.microconfig.commands.buildconfig.features.templates.TemplatePattern.DEFAULT_TEMPLATE_PREFIX;
-import static io.microconfig.commands.buildconfig.features.templates.TemplatePattern.defaultPattern;
+import static io.microconfig.core.properties.templates.TemplatePattern.defaultPattern;
 import static io.microconfig.utils.CacheProxy.cache;
+import static io.microconfig.utils.CollectionUtils.join;
 import static java.util.Arrays.asList;
 import static java.util.List.of;
 
@@ -90,7 +91,7 @@ import static java.util.List.of;
 public class MgmtFactory {
     private final DeployFileStructure deployFileStructure;
     private final LockService lockService;
-    private final ConfigIoService configIoService;
+    private final ConfigIo configIo;
     private final ComponentGroupService componentGroupService;
     private final PropertyService propertyService;
     private final MetadataProvider metadataProvider;
@@ -116,15 +117,15 @@ public class MgmtFactory {
         this.deployFileStructure = DeployFileStructureImpl.init();
         this.lockService = new OsLockService(deployFileStructure);
         FsReader fileReader = new DumpedFsReader();
-        this.configIoService = new ConfigIoServiceSelector(
+        this.configIo = new ConfigIoSelector(
                 cache(new ConfigFormatDetectorImpl(fileReader)),
-                new YamlConfigIoService(fileReader),
-                new PropertiesConfigIoService(fileReader)
+                new YamlConfigIo(fileReader),
+                new PropertiesConfigIo(fileReader)
         );
-        this.propertyService = new PropertyServiceImpl(deployFileStructure, configIoService);
+        this.propertyService = new PropertyServiceImpl(deployFileStructure, configIo);
         this.metadataProvider = new MetadataProviderImpl(deployFileStructure);
-        this.componentGroupService = new ComponentGroupServiceImpl(deployFileStructure, propertyService, configIoService);
-        this.deploySettings = new DeploySettingsImpl(deployFileStructure, componentGroupService, new SimpleEncryptionServiceImpl(), configIoService);
+        this.componentGroupService = new ComponentGroupServiceImpl(deployFileStructure, propertyService, configIo);
+        this.deploySettings = new DeploySettingsImpl(deployFileStructure, componentGroupService, new SimpleEncryptionServiceImpl(), configIo);
         this.nexusClient = new NexusClientImpl(
                 new RepositoryPriorityServiceImpl(asList("ru", Mgmt.class.getPackage().getName().split("\\.")[0])),
                 deploySettings
@@ -185,9 +186,10 @@ public class MgmtFactory {
 
     private TemplateService microconfigTemplateService() {
         return new TemplateServiceImpl(
-                new CopyTemplatesServiceImpl(
-                        defaultPattern().withTemplatePrefixes(List.of("mgmt.template.", DEFAULT_TEMPLATE_PREFIX)),
-                        new OldConfigsRelativePathResolver(deployFileStructure.configs().getConfigsRootDir())
+                new TemplatesService(
+                        defaultPattern()
+                                .withTemplatePrefixes(join(List.of("mgmt.template."), defaultPattern().getTemplatePrefixes())),
+                        new MustacheTemplateProcessor()
                 ),
                 componentGroupService,
                 deployFileStructure,
@@ -212,9 +214,9 @@ public class MgmtFactory {
                 newStartCommand(),
                 stopService,
                 newInitService(),
-                new EncryptPropertiesCommandImpl(deployFileStructure, configIoService),
+                new EncryptPropertiesCommandImpl(deployFileStructure, configIo),
                 updateConfigCommand,
-                new ShowDiffCommandImpl(componentGroupService, propertyService, deployFileStructure, configIoService),
+                new ShowDiffCommandImpl(componentGroupService, propertyService, deployFileStructure, configIo),
                 new LessLogCommand(propertyService, deployFileStructure),
                 deploySettings,
                 mgmgUpdater,

@@ -11,7 +11,7 @@ import lombok.RequiredArgsConstructor;
 import java.io.File;
 import java.util.Map;
 
-import static io.microconfig.utils.FilePermissionUtils.allowExecution;
+import static mgmt.utils.FilePermissionUtils.allowExecution;
 import static io.microconfig.utils.FileUtils.write;
 
 @RequiredArgsConstructor

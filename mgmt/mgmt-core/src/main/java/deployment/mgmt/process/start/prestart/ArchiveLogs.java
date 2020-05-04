@@ -10,7 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import static deployment.mgmt.utils.ZipUtils.zip;
-import static io.microconfig.utils.FileUtils.createFile;
+import static mgmt.utils.FileUtils.createFile;
 import static io.microconfig.utils.Logger.info;
 
 @RequiredArgsConstructor

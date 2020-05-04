@@ -61,9 +61,10 @@ public class SshCommandImpl implements SshCommand {
             return outputTransformer.apply(group, remoteOutput);
         };
 
-        List<ComponentGroup> componentGroups = mgmtProperties.getEnvironmentProvider()
+        List<ComponentGroup> componentGroups = mgmtProperties.microconfig()
+                .environments()
                 .getByName(env)
-                .getComponentGroups();
+                .getGroups();
         return executeInParallel(
                 () -> componentGroups
                         .parallelStream()

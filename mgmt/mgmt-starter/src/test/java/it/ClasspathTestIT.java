@@ -13,20 +13,21 @@ import deployment.mgmt.configs.filestructure.DeployFileStructureImpl;
 import deployment.mgmt.configs.service.properties.MavenSettings;
 import deployment.mgmt.configs.service.properties.NexusRepository;
 import deployment.mgmt.configs.service.properties.impl.PropertyServiceImpl;
-import io.microconfig.core.properties.io.ioservice.ConfigIoService;
-import io.microconfig.core.properties.io.ioservice.properties.PropertiesConfigIoService;
-import io.microconfig.core.properties.io.ioservice.selector.ConfigFormatDetectorImpl;
-import io.microconfig.core.properties.io.ioservice.selector.ConfigIoServiceSelector;
-import io.microconfig.core.properties.io.ioservice.yaml.YamlConfigIoService;
-import io.microconfig.utils.reader.FsFilesReader;
+import io.microconfig.core.properties.io.ConfigIo;
+import io.microconfig.core.properties.io.properties.PropertiesConfigIo;
+import io.microconfig.core.properties.io.selector.ConfigFormatDetectorImpl;
+import io.microconfig.core.properties.io.selector.ConfigIoSelector;
+import io.microconfig.core.properties.io.yaml.YamlConfigIo;
+import io.microconfig.io.DumpedFsReader;
+import io.microconfig.io.FsReader;
 import org.junit.jupiter.api.Disabled;
 
 import java.io.File;
 import java.util.List;
 
 import static io.microconfig.utils.Logger.announce;
-import static mgmt.utils.TimeUtils.secAfter;
 import static java.util.Arrays.asList;
+import static mgmt.utils.TimeUtils.secAfter;
 
 @Disabled
 public class ClasspathTestIT {
@@ -67,8 +68,9 @@ public class ClasspathTestIT {
         );
     }
 
-    private static ConfigIoService configIoSelector() {
-        FsFilesReader fileReader = new FsFilesReader();
-        return new ConfigIoServiceSelector(new ConfigFormatDetectorImpl(fileReader), new YamlConfigIoService(fileReader), new PropertiesConfigIoService(fileReader));
+    private static ConfigIo configIoSelector() {
+        FsReader fileReader = new DumpedFsReader();
+        return new ConfigIoSelector(new ConfigFormatDetectorImpl(fileReader),
+                new YamlConfigIo(fileReader), new PropertiesConfigIo(fileReader));
     }
 }

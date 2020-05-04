@@ -11,6 +11,7 @@ import static io.microconfig.utils.FileUtils.*;
 import static io.microconfig.utils.IoUtils.readFully;
 import static io.microconfig.utils.Logger.info;
 import static mgmt.utils.FileUtils.userHome;
+import static mgmt.utils.FileUtils.userHomeString;
 import static mgmt.utils.OsUtil.isWindows;
 import static mgmt.utils.ProcessUtil.currentJavaPath;
 
