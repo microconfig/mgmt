@@ -4,7 +4,7 @@ import io.microconfig.commands.buildconfig.BuildConfigPostProcessor;
 import io.microconfig.core.properties.ConfigProvider;
 import io.microconfig.core.properties.Property;
 import io.microconfig.core.properties.resolver.EnvComponent;
-import io.microconfig.utils.SystemPropertiesUtils;
+import mgmt.utils.SystemPropertiesUtils;
 
 import java.io.File;
 import java.io.IOException;

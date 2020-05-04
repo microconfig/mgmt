@@ -23,9 +23,9 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
-import static io.microconfig.utils.FileUtils.createDir;
+import static mgmt.utils.FileUtils.createDir;
 import static io.microconfig.utils.FileUtils.delete;
-import static io.microconfig.utils.OsUtil.isWindows;
+import static mgmt.utils.OsUtil.isWindows;
 import static java.nio.file.Files.setPosixFilePermissions;
 import static java.nio.file.attribute.PosixFilePermission.*;
 import static java.util.Objects.requireNonNull;

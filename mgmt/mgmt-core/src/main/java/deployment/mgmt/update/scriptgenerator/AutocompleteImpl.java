@@ -11,7 +11,7 @@ import java.io.File;
 import java.util.stream.Stream;
 
 import static deployment.console.ConsoleApiExposerImpl.expose;
-import static io.microconfig.utils.FileUtils.userHome;
+import static mgmt.utils.FileUtils.userHome;
 import static io.microconfig.utils.FileUtils.write;
 import static java.lang.String.join;
 import static java.util.stream.Collectors.joining;

@@ -9,8 +9,8 @@ import java.util.Map;
 
 import static io.microconfig.utils.FileUtils.write;
 import static io.microconfig.utils.Logger.announce;
-import static io.microconfig.utils.TimeUtils.printLongTime;
-import static io.microconfig.utils.TimeUtils.secAfter;
+import static mgmt.utils.TimeUtils.printLongTime;
+import static mgmt.utils.TimeUtils.secAfter;
 import static java.lang.System.currentTimeMillis;
 
 @RequiredArgsConstructor

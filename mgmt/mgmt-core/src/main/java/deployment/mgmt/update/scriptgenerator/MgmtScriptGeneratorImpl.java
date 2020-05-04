@@ -6,11 +6,12 @@ import lombok.RequiredArgsConstructor;
 import java.io.File;
 import java.util.function.Supplier;
 
-import static io.microconfig.utils.FilePermissionUtils.writeExecutable;
+import static mgmt.utils.FilePermissionUtils.writeExecutable;
 import static io.microconfig.utils.FileUtils.*;
 import static io.microconfig.utils.IoUtils.readFully;
 import static io.microconfig.utils.Logger.info;
-import static io.microconfig.utils.OsUtil.isWindows;
+import static mgmt.utils.FileUtils.userHome;
+import static mgmt.utils.OsUtil.isWindows;
 import static mgmt.utils.ProcessUtil.currentJavaPath;
 
 @RequiredArgsConstructor

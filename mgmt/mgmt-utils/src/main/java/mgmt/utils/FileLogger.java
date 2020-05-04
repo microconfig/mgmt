@@ -2,7 +2,7 @@ package mgmt.utils;
 
 import java.io.*;
 
-import static io.microconfig.utils.FileUtils.createFile;
+import static mgmt.utils.FileUtils.createFile;
 
 public class FileLogger implements AutoCloseable {
     private final PrintWriter writer;

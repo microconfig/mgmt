@@ -21,8 +21,8 @@ import static deployment.mgmt.utils.ZipUtils.unzip;
 import static io.microconfig.core.environments.Component.byType;
 import static io.microconfig.core.properties.Property.withoutTempValues;
 import static io.microconfig.utils.Logger.*;
-import static io.microconfig.utils.OsUtil.isWindows;
-import static io.microconfig.utils.TimeUtils.secAfter;
+import static mgmt.utils.OsUtil.isWindows;
+import static mgmt.utils.TimeUtils.secAfter;
 import static java.lang.System.currentTimeMillis;
 import static mgmt.utils.ProcessUtil.executeScript;
 

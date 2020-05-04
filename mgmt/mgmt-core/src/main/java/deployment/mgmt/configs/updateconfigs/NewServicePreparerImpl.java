@@ -12,9 +12,9 @@ import java.io.File;
 import java.util.List;
 import java.util.function.Consumer;
 
-import static io.microconfig.utils.FileUtils.copy;
+import static  mgmt.utils.FileUtils.copy;
 import static io.microconfig.utils.Logger.error;
-import static io.microconfig.utils.SystemPropertiesUtils.hasSystemFlag;
+import static mgmt.utils.SystemPropertiesUtils.hasSystemFlag;
 
 @RequiredArgsConstructor
 public class NewServicePreparerImpl implements NewServicePreparer {

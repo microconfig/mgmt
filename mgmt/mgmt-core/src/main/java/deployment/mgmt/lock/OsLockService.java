@@ -10,9 +10,9 @@ import java.nio.channels.FileChannel;
 import java.nio.channels.FileLock;
 
 import static io.microconfig.utils.ConsoleColor.yellow;
-import static io.microconfig.utils.IoUtils.firstLineOrEmpty;
+import static mgmt.utils.IoUtils.firstLineOrEmpty;
 import static io.microconfig.utils.Logger.*;
-import static io.microconfig.utils.TimeUtils.secAfter;
+import static mgmt.utils.TimeUtils.secAfter;
 import static java.lang.ProcessHandle.current;
 import static java.lang.String.valueOf;
 import static java.lang.System.currentTimeMillis;

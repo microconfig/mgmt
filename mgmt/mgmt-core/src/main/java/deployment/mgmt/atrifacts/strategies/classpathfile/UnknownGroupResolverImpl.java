@@ -13,7 +13,7 @@ import static deployment.mgmt.atrifacts.ArtifactType.POM;
 import static deployment.mgmt.utils.CollectionUtils.findDuplicates;
 import static io.microconfig.utils.Logger.error;
 import static io.microconfig.utils.StreamUtils.filter;
-import static io.microconfig.utils.StreamUtils.map;
+import static io.microconfig.utils.StreamUtils.forEach;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Stream.concat;
 
@@ -34,7 +34,7 @@ public class UnknownGroupResolverImpl implements UnknownGroupResolver {
                                      List<NexusRepository> nexusRepositories, File localRepo) {
         List<Artifact> resolved = new ArrayList<>();
         Queue<Artifact> pomToDownload = new ArrayDeque<>(List.of(parentArtifact));
-        Set<String> notUniqueArtifactIds = findDuplicates(map(unknown, Artifact::getArtifactId));
+        Set<String> notUniqueArtifactIds = findDuplicates(forEach(unknown, Artifact::getArtifactId));
 
         while (!pomToDownload.isEmpty()) {
             String pom = downloadPom(pomToDownload.remove(), nexusRepositories, localRepo);

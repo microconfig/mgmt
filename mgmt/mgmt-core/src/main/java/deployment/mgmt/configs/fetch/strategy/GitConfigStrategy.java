@@ -9,7 +9,7 @@ import lombok.RequiredArgsConstructor;
 import java.io.File;
 import java.util.List;
 
-import static io.microconfig.utils.FileUtils.userHome;
+import static mgmt.utils.FileUtils.userHome;
 import static io.microconfig.utils.Logger.announce;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Stream.of;

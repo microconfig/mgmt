@@ -13,7 +13,7 @@ import java.util.stream.Stream;
 
 import static deployment.mgmt.configs.service.properties.impl.StandardServiceGroup.*;
 import static io.microconfig.utils.StringUtils.isEmpty;
-import static io.microconfig.utils.StringUtils.replaceMultipleSpaces;
+import static mgmt.utils.StringUtils.replaceMultipleSpaces;
 import static java.util.Collections.*;
 import static java.util.Optional.ofNullable;
 import static java.util.Set.of;

@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 
 import java.io.File;
 
-import static io.microconfig.utils.FileUtils.createFile;
+import static mgmt.utils.FileUtils.createFile;
 
 @RequiredArgsConstructor
 public class ProcessDirsImpl implements ProcessDirs {

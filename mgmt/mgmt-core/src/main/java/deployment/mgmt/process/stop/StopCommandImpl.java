@@ -12,7 +12,7 @@ import java.util.stream.Stream;
 
 import static deployment.mgmt.process.stop.StopHandle.create;
 import static io.microconfig.utils.Logger.announce;
-import static io.microconfig.utils.TimeUtils.secAfter;
+import static mgmt.utils.TimeUtils.secAfter;
 import static java.lang.Integer.MAX_VALUE;
 import static java.lang.System.currentTimeMillis;
 import static java.util.Optional.ofNullable;

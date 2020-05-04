@@ -1,3 +1,4 @@
 dependencies {
-    implementation lib.microconfig_utils
+    implementation lib.microconfig_utils,
+            project(':mgmt:mgmt-utils')
 }

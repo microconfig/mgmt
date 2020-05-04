@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.function.Supplier;
 
 import static deployment.mgmt.configs.service.properties.ClasspathStrategyType.CLASSPATH_FILE;
-import static io.microconfig.utils.TimeUtils.percentProgress;
+import static mgmt.utils.TimeUtils.percentProgress;
 import static java.util.Collections.singletonList;
 import static java.util.stream.Collectors.toList;
 import static mgmt.utils.LoggerUtils.oneLineInfo;

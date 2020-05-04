@@ -6,7 +6,7 @@ import lombok.RequiredArgsConstructor;
 import java.io.File;
 import java.util.Set;
 
-import static io.microconfig.utils.FileUtils.userHome;
+import static mgmt.utils.FileUtils.userHome;
 import static java.util.stream.Stream.concat;
 
 @RequiredArgsConstructor

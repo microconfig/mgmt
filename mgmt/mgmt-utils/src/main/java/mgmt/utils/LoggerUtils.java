@@ -1,5 +1,7 @@
 package mgmt.utils;
 
+import io.microconfig.utils.Logger;
+
 import static java.lang.Math.max;
 
 public class LoggerUtils {
@@ -14,5 +16,13 @@ public class LoggerUtils {
         }
         System.out.print("\r" + message);
         maxOneLineLength = Math.max(77, initialMessageLength);
+    }
+
+    public static String align(String value, int spacesCount) {
+        return String.format("%1$-" + spacesCount + "s", value);
+    }
+
+    public static void logLineBreak() {
+        Logger.info("");
     }
 }

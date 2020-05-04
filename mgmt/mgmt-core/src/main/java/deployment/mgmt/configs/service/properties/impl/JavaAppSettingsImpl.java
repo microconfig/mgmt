@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 import java.util.List;
 import java.util.Map;
 
-import static io.microconfig.utils.OsUtil.isWindows;
+import static mgmt.utils.OsUtil.isWindows;
 import static io.microconfig.utils.StringUtils.isEmpty;
 import static io.microconfig.utils.StringUtils.replaceMultipleSpaces;
 import static java.io.File.pathSeparator;

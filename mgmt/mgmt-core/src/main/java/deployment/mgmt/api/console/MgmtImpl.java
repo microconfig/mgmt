@@ -31,11 +31,12 @@ import static deployment.mgmt.init.InitParams.getConfigBranchOrTag;
 import static deployment.mgmt.init.InitParams.getProjectFullVersionOrPostfix;
 import static deployment.mgmt.process.status.ExecutionStatus.RUNNING;
 import static io.microconfig.utils.Logger.*;
-import static io.microconfig.utils.SystemPropertiesUtils.hasSystemFlag;
-import static io.microconfig.utils.TimeUtils.secAfter;
 import static java.lang.String.join;
 import static java.lang.System.currentTimeMillis;
 import static java.util.List.of;
+import static mgmt.utils.LoggerUtils.logLineBreak;
+import static mgmt.utils.SystemPropertiesUtils.hasSystemFlag;
+import static mgmt.utils.TimeUtils.secAfter;
 
 //todo2 refactor
 @RequiredArgsConstructor

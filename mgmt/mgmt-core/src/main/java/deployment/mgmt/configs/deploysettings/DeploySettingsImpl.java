@@ -13,7 +13,7 @@ import static deployment.mgmt.atrifacts.Artifact.fromMavenString;
 import static deployment.mgmt.configs.service.properties.NexusRepository.RepositoryType.RELEASE;
 import static deployment.mgmt.init.InitParams.*;
 import static io.microconfig.utils.FileUtils.*;
-import static io.microconfig.utils.IoUtils.firstLine;
+import static mgmt.utils.IoUtils.firstLine;
 import static io.microconfig.utils.IoUtils.readFully;
 import static io.microconfig.utils.Logger.info;
 import static java.lang.System.getProperty;

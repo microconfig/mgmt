@@ -6,7 +6,7 @@ import lombok.RequiredArgsConstructor;
 import java.io.File;
 
 import static io.microconfig.utils.FileUtils.write;
-import static io.microconfig.utils.IoUtils.firstLine;
+import static mgmt.utils.IoUtils.firstLine;
 import static io.microconfig.utils.Logger.announce;
 import static io.microconfig.utils.StringUtils.isEmpty;
 

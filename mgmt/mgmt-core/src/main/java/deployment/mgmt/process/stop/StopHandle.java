@@ -9,7 +9,7 @@ import java.util.Deque;
 import java.util.Optional;
 
 import static io.microconfig.utils.Logger.*;
-import static io.microconfig.utils.TimeUtils.secAfter;
+import static mgmt.utils.TimeUtils.secAfter;
 import static java.lang.System.currentTimeMillis;
 import static mgmt.utils.ProcessUtil.waitTermination;
 

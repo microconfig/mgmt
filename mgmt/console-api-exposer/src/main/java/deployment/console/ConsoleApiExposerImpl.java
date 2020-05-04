@@ -10,7 +10,6 @@ import java.util.stream.Stream;
 import static io.microconfig.utils.ConsoleColor.green;
 import static io.microconfig.utils.ConsoleColor.yellow;
 import static io.microconfig.utils.Logger.*;
-import static io.microconfig.utils.StringUtils.toLowerHyphen;
 import static java.lang.System.arraycopy;
 import static java.lang.System.exit;
 import static java.util.Arrays.copyOfRange;
@@ -18,6 +17,7 @@ import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Stream.of;
+import static mgmt.utils.StringUtils.toLowerHyphen;
 
 @RequiredArgsConstructor
 public class ConsoleApiExposerImpl implements ConsoleApiExposer {

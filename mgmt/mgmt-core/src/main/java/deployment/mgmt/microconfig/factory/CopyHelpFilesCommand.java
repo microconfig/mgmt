@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static deployment.mgmt.microconfig.factory.MgmtMicroConfigAdapter.MGMT;
-import static io.microconfig.utils.FileUtils.copy;
+import static mgmt.utils.FileUtils.copy;
 import static java.util.Optional.empty;
 import static java.util.Optional.of;
 import static java.util.stream.Collectors.toList;

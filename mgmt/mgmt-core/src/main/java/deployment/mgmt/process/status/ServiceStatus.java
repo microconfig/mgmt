@@ -12,9 +12,9 @@ import java.util.function.UnaryOperator;
 
 import static deployment.mgmt.process.status.ExecutionStatus.*;
 import static deployment.mgmt.process.status.ServiceType.TASK;
-import static io.microconfig.utils.Logger.align;
+import static mgmt.utils.LoggerUtils.align;
 import static io.microconfig.utils.StringUtils.isEmpty;
-import static io.microconfig.utils.TimeUtils.formatTimeAfter;
+import static mgmt.utils.TimeUtils.formatTimeAfter;
 
 @Data
 @AllArgsConstructor

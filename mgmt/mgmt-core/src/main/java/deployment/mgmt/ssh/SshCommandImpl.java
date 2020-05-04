@@ -13,8 +13,8 @@ import java.util.function.Function;
 import java.util.stream.Stream;
 
 import static deployment.mgmt.utils.ExecutorUtils.executeInParallel;
-import static io.microconfig.utils.FilePermissionUtils.writeExecutable;
-import static io.microconfig.utils.IoUtils.lines;
+import static mgmt.utils.FilePermissionUtils.writeExecutable;
+import static mgmt.utils.IoUtils.lines;
 import static io.microconfig.utils.Logger.warn;
 import static java.lang.Math.min;
 import static java.lang.System.out;

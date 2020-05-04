@@ -26,7 +26,7 @@ import java.util.stream.Stream;
 import static deployment.mgmt.atrifacts.Artifact.LOCAL_REPO_DIR;
 import static deployment.mgmt.atrifacts.Artifact.SNAPSHOT;
 import static deployment.mgmt.atrifacts.ArtifactType.JAR;
-import static io.microconfig.utils.FileUtils.createDir;
+import static mgmt.utils.FileUtils.createDir;
 import static io.microconfig.utils.FileUtils.delete;
 import static io.microconfig.utils.Logger.warn;
 import static java.nio.file.Files.copy;

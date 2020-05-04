@@ -1,6 +1,6 @@
 package deployment.mgmt.init;
 
-import static io.microconfig.utils.SystemPropertiesUtils.getRequiredProperty;
+import static mgmt.utils.SystemPropertiesUtils.getRequiredProperty;
 
 public class InitParams {
     public static final String ENV = "env";

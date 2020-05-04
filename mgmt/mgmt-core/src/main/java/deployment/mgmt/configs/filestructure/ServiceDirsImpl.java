@@ -5,8 +5,8 @@ import org.springframework.cglib.core.internal.Function;
 
 import java.io.File;
 
-import static io.microconfig.utils.FileUtils.createDir;
-import static io.microconfig.utils.FileUtils.userHome;
+import static mgmt.utils.FileUtils.createDir;
+import static mgmt.utils.FileUtils.userHome;
 
 @RequiredArgsConstructor
 public class ServiceDirsImpl implements ServiceDirs {

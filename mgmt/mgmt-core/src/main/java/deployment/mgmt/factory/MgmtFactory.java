@@ -74,15 +74,15 @@ import io.microconfig.core.properties.io.ioservice.properties.PropertiesConfigIo
 import io.microconfig.core.properties.io.ioservice.selector.ConfigFormatDetectorImpl;
 import io.microconfig.core.properties.io.ioservice.selector.ConfigIoServiceSelector;
 import io.microconfig.core.properties.io.ioservice.yaml.YamlConfigIoService;
-import io.microconfig.utils.reader.FilesReader;
-import io.microconfig.utils.reader.FsFilesReader;
+import io.microconfig.io.FsReader;
+import io.microconfig.io.DumpedFsReader;
 import lombok.Getter;
 
 import java.util.List;
 
 import static io.microconfig.commands.buildconfig.features.templates.TemplatePattern.DEFAULT_TEMPLATE_PREFIX;
 import static io.microconfig.commands.buildconfig.features.templates.TemplatePattern.defaultPattern;
-import static io.microconfig.utils.CacheHandler.cache;
+import static io.microconfig.utils.CacheProxy.cache;
 import static java.util.Arrays.asList;
 import static java.util.List.of;
 
@@ -115,7 +115,7 @@ public class MgmtFactory {
     public MgmtFactory() {
         this.deployFileStructure = DeployFileStructureImpl.init();
         this.lockService = new OsLockService(deployFileStructure);
-        FilesReader fileReader = new FsFilesReader();
+        FsReader fileReader = new DumpedFsReader();
         this.configIoService = new ConfigIoServiceSelector(
                 cache(new ConfigFormatDetectorImpl(fileReader)),
                 new YamlConfigIoService(fileReader),

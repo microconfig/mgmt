@@ -8,7 +8,7 @@ import java.util.function.Function;
 import java.util.function.UnaryOperator;
 import java.util.stream.Stream;
 
-import static io.microconfig.utils.StringUtils.indexOfFirstDigitOr;
+import static mgmt.utils.StringUtils.indexOfFirstDigitOr;
 import static java.lang.Integer.parseInt;
 import static java.lang.Math.min;
 import static java.util.Comparator.comparing;

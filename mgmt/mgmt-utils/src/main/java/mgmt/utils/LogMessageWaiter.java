@@ -1,7 +1,6 @@
 package mgmt.utils;
 
 import io.microconfig.utils.ConsoleColor;
-import io.microconfig.utils.TimeUtils;
 import lombok.RequiredArgsConstructor;
 
 import java.io.BufferedReader;
@@ -11,7 +10,7 @@ import java.io.IOException;
 import java.util.Optional;
 import java.util.Set;
 
-import static io.microconfig.utils.Logger.logLineBreak;
+import static mgmt.utils.LoggerUtils.logLineBreak;
 import static mgmt.utils.ThreadUtils.sleepSec;
 
 @RequiredArgsConstructor

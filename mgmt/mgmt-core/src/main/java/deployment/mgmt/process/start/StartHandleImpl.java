@@ -13,7 +13,7 @@ import java.util.Set;
 import static deployment.mgmt.configs.service.properties.impl.ProcessPropertiesImpl.emptyProperties;
 import static io.microconfig.utils.Logger.announce;
 import static io.microconfig.utils.Logger.info;
-import static io.microconfig.utils.TimeUtils.calcSecFrom;
+import static mgmt.utils.TimeUtils.calcSecFrom;
 import static java.lang.System.currentTimeMillis;
 import static mgmt.utils.ProcessUtil.*;
 import static mgmt.utils.ThreadUtils.sleepSec;

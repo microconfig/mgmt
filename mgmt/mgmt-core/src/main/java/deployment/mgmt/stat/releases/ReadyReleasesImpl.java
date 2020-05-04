@@ -11,7 +11,7 @@ import java.util.function.Supplier;
 
 import static deployment.mgmt.utils.JsonUtil.toJson;
 import static io.microconfig.utils.ConsoleColor.green;
-import static io.microconfig.utils.Logger.align;
+import static mgmt.utils.LoggerUtils.align;
 
 @RequiredArgsConstructor
 public class ReadyReleasesImpl implements ReadyReleases {

@@ -8,7 +8,7 @@ import java.util.function.Consumer;
 
 import static deployment.mgmt.utils.JsonUtil.toJson;
 import static io.microconfig.utils.ConsoleColor.green;
-import static io.microconfig.utils.Logger.align;
+import static mgmt.utils.LoggerUtils.align;
 import static java.util.Collections.emptyList;
 import static lombok.AccessLevel.PRIVATE;
 

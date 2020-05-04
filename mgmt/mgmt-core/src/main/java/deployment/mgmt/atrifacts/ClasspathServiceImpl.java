@@ -15,8 +15,8 @@ import java.util.Optional;
 import java.util.function.Predicate;
 
 import static io.microconfig.utils.Logger.error;
-import static io.microconfig.utils.Logger.logLineBreak;
-import static io.microconfig.utils.TimeUtils.msAfter;
+import static mgmt.utils.LoggerUtils.logLineBreak;
+import static mgmt.utils.TimeUtils.msAfter;
 import static java.lang.System.currentTimeMillis;
 import static lombok.AccessLevel.PRIVATE;
 import static mgmt.utils.LoggerUtils.oneLineInfo;

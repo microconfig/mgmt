@@ -10,14 +10,14 @@ import java.io.File;
 import java.util.List;
 
 import static deployment.mgmt.configs.service.properties.ClasspathStrategyType.NEXUS;
-import static io.microconfig.utils.StreamUtils.map;
+import static io.microconfig.utils.StreamUtils.forEach;
 
 public class NexusClasspathStrategy implements ClasspathStrategy {
     private final NexusResolver nexusResolver = new NexusResolver();
 
     @Override
     public List<File> downloadDependencies(Artifact artifact, boolean resolveSingleArtifact, List<NexusRepository> nexusRepositories, File localRepositoryDir, File logTo) {
-        List<RemoteRepository> repositories = map(nexusRepositories, r -> new RemoteRepository.Builder(r.getName(), "default", r.getUrl()).build());
+        List<RemoteRepository> repositories = forEach(nexusRepositories, r -> new RemoteRepository.Builder(r.getName(), "default", r.getUrl()).build());
         return nexusResolver.downloadDependencies(artifact.getMavenFormatString(), resolveSingleArtifact, repositories, localRepositoryDir, logTo);
     }
 
