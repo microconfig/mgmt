@@ -214,7 +214,7 @@ public class MgmtFactory {
                 newStartCommand(),
                 stopService,
                 newInitService(),
-                new EncryptPropertiesCommandImpl(deployFileStructure, configIo),
+                new EncryptPropertiesCommandImpl(deployFileStructure),
                 updateConfigCommand,
                 new ShowDiffCommandImpl(componentGroupService, propertyService, deployFileStructure, configIo),
                 new LessLogCommand(propertyService, deployFileStructure),
